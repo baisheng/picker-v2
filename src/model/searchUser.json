@@ -1,0 +1,27 @@
+{
+  "results": [
+    {
+      "userId": "c80e87a14fd245b7978306f3cd0d0f10",
+      "email": "baisheng@gmail.com",
+      "givenName": "Baisheng",
+      "familyName": "Liu",
+      "profilePhoto": "https://lh3.googleusercontent.com/-gAW4AqtnNPA/AAAAAAAAAAI/AAAAAAAACAU/UllZm1KVMtM/photo.jpg?sz=50"
+    }
+  ],
+  "recordMap": {
+    "notion_user": {
+      "c80e87a14fd245b7978306f3cd0d0f10": {
+        "value": {
+          "id": "c80e87a14fd245b7978306f3cd0d0f10",
+          "version": 2,
+          "email": "baisheng@gmail.com",
+          "given_name": "Baisheng",
+          "family_name": "Liu",
+          "profile_photo": "https://lh3.googleusercontent.com/-gAW4AqtnNPA/AAAAAAAAAAI/AAAAAAAACAU/UllZm1KVMtM/photo.jpg?sz=50",
+          "initialized": true
+        },
+        "role": "editor"
+      }
+    }
+  }
+}

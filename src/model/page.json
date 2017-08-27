@@ -1,0 +1,15 @@
+{
+  "CookieDomain": "notion.so",
+  "Blocks": [
+    {
+      "Selector": "input[type=password]",
+      "Kind": "blocked"
+    }
+  ],
+  "UserIntId": "5804968647852032",
+  "SessionIntId": "5757334940811264",
+  "PageIntId": "5693417237512192",
+  "EmbedToken": "",
+  "IntegrationScript": "(function(FS) {\n\n\tvar session = FS.getCurrentSession(), sessionUrl = FS.getCurrentSessionURL();\n\tif (window['Intercom'] \u0026\u0026 typeof(Intercom)==\"function\") {\n\t\tvar lastSession = FS._cookies()['fs_intercom'];\n\t\tif (session != lastSession) {\n\t\t\tFS._setCookie('fs_intercom', session);\n\t\t\tvar fsMetadata = {\n\t\t\t\t\"Session URL\": {\n\t\t\t\t\tvalue: \"Play in FullStory\",\n\t\t\t\t\turl: sessionUrl\n\t\t\t\t}\n\t\t\t};\n\t\t\tIntercom('trackEvent', 'New FullStory Session', fsMetadata);\n\t\t\tintercomUpdateAttrAsync();\n\t\t}\n\t} else {\n\t\tFS.log(\"warn\", \"Intercom integration was not loaded even though the Intercom integration is turned on.\");\n\t}\n\n\tfunction intercomUpdateAttrAsync() {\n\t\tif (Intercom.booted) {\n\t\t\tIntercom('update', {'Latest FullStory Session': sessionUrl});\n\t\t} else {\n\t\t\tsetTimeout(intercomUpdateAttrAsync, 500);\n\t\t}\n\t};\n\t\n})(window['_fs_namespace'] ? window[window['_fs_namespace']] : window['FS'])",
+  "GetCurrentSessionEnabled": true
+}

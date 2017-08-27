@@ -1,0 +1,30 @@
+/* post {blockId: '"d31d70111d5a4249b8171c97ee08a1d7"'}*/
+{
+  "userSpaceData": {
+    "id": "851081ff0ab14f63aa698b258047489a",
+    "isSubscribed": false,
+    "isPersonal": true,
+    "blockUsage": 60,
+    "maximumBlockUsage": 300,
+    "spaceMembers": [
+      {
+        "userId": "c80e87a14fd245b7978306f3cd0d0f10",
+        "role": "editor",
+        "isGuest": false,
+        "guestPageIds": []
+      }
+    ],
+    "referrals": [],
+    "blockUsageIsUnlimited": false,
+    "subscription": {
+      "periodStart": 1498867200000,
+      "periodEnd": 1501545599999,
+      "pricingPerCollaborator": 800,
+      "numCollaborators": 1
+    }
+  },
+  "ancestorSpaceData": {
+    "id": "851081ff0ab14f63aa698b258047489a",
+    "canJoin": true
+  }
+}
