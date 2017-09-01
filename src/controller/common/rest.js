@@ -20,8 +20,16 @@ module.exports = class extends think.Controller {
     this.modelInstance = this.model(this.resource);
   }
   async __before() {
-    const orgs = await this.cache('orgs')
+    // const orgs = async () => {
+    //   let _orgs = await this.cache('orgs')
+    //   return JSON.parse(_orgs)
+    // }
+    let orgs = await think.cache('orgs')
+    // console.log(JSON.parse(orgs)['vanq.picker.la'])
+    orgs = JSON.parse(orgs)
     this.orgId = orgs[this.ctx.host]
+    this.cachePrefix = 'picker_' + this.orgId + '_'
+    // console.log(this.orgId + '-----')
     if (!think.isEmpty(this.orgId)) {
       this.modelInstance = this.model(this.resource, {orgId: this.orgId});
     }

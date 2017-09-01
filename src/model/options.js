@@ -1,37 +1,14 @@
 const redisCache = require('think-cache-redis');
+import Base from './base';
 
-module.exports = class extends think.Model {
+module.exports = class extends Base {
   constructor(...args) {
     super(...args);
-    this.cacheKey = '_options';
-    // /**
-    //  * cache options
-    //  * @type {Object}
-    //  */
-    // this.cacheOptions = {
-    //   timeout: 30 * 24 * 3600 * 1000
-    // type: 'file'
-    // type: !think.isMaster ? 'file' : 'memory'
-    // };
-  }
-
-  /**
-   * 缓存网站配置
-   * @returns {*}
-   */
-  // async get(){
-  //   let value = await think.cache("options", () => {
-  //     return this.lists();
-  //   }, {timeout: 365 * 24 * 3600});
-  //
-  //   return value;
-  // }
-  async getOption(name) {
-    let options = await this.getOptions(true);
-    return await think._.find(options, name);
+    this.cacheKey = this.tablePrefix + 'options';
   }
 
   async get (flag) {
+    console.log(this.cacheKey)
     if (flag) {
       await think.cache(this.cacheKey, null)
     }

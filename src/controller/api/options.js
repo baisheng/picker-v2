@@ -2,7 +2,7 @@ const BaseRest = require('../common/rest.js');
 module.exports = class extends BaseRest {
   async getAction() {
 
-    let data = await this.modelInstance.getOptions()
+    let data = await this.modelInstance.get()
     return this.success(data)
     // let key = this.get('key')
     // let data;

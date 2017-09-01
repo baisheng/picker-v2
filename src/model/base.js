@@ -5,6 +5,7 @@ module.exports = class extends think.Model {
     if (this.config['orgId'] !== undefined) {
       this.orgId = this.config['orgId'] + '_'
     }
+    // this.prefix = 'picker_' + this.orgId + '_'
   }
 
   get tablePrefix() {

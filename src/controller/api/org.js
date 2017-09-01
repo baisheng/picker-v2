@@ -2,14 +2,18 @@ const BaseRest = require('../common/rest')
 module.exports = class extends BaseRest {
 
   async getAction() {
-    const data = await this.model('orgs').where({[this.modelInstance.pk]: this.orgId}).find();
-    for (let meta of data.metas) {
-      if (meta.meta_key === 'basic') {
-        data.basic = JSON.parse(meta.meta_value)
+    try {
+      const data = await this.model('orgs').where({[this.modelInstance.pk]: this.orgId}).find();
+      for (let meta of data.metas) {
+        if (meta.meta_key === 'basic') {
+          data.basic = JSON.parse(meta.meta_value)
+        }
       }
+      delete data.metas;
+      return this.success(data);
+    } catch (e) {
+      return this.fail()
     }
-    delete data.metas;
-    return this.success(data);
   }
 
   async _format_Meta(posts) {

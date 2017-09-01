@@ -6,9 +6,10 @@ const jwt = require('jsonwebtoken')
 
 export default class extends BaseRest {
   async postAction() {
+    console.log(JSON.stringify(this.post()))
     // if (this.ctx.isPost) {
     const userLogin = this.post('user_login');
-    const userModel = this.model('users');
+    const userModel = this.model('users', {orgId: this.orgId});
     const userInfo = await userModel.where({user_login: userLogin}).find();
     if (think.isEmpty(userInfo)) {
       return this.fail('ACCOUNT_ERROR');
@@ -25,7 +26,8 @@ export default class extends BaseRest {
       return this.fail('ACCOUNT_ERROR');
     }
     // 获取签名盐
-    const token = jwt.sign(userInfo, 'pa$$word')
+    const token = jwt.sign(userInfo, 'shared-secret', { expiresIn: '3d' })
+    // user: userInfo.user_login,
     return this.success({user: userInfo.user_login, token: token});
     // }
   }
