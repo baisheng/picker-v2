@@ -22,6 +22,11 @@ export default class extends Base {
 
   get relation() {
     return {
+      // children: {
+      //   type:think.Model.HAS_MANY,
+      //   model: 'posts',
+      //   fKey: 'parent'
+      // },
       metas: {
         type: think.Model.HAS_MANY,
         model: 'postmeta',
@@ -52,6 +57,13 @@ export default class extends Base {
     return _id
   }
 
+  // async update (data) {
+    // return await super.update(data, this.options)
+    // if (!Object.is(data['featured_image'], undefined)) {
+    //   console.log(JSON.stringify(data))
+    //
+    // }
+  // }
   // async save(data) {
     // let res = await this.add{{
     // }}

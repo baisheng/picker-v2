@@ -1,7 +1,7 @@
 const path = require('path');
 const fs = require('fs')
 const sharp = require('sharp')
-
+const mediaTags = require("jsmediatags")
 const BaseRest = require('../common/rest')
 module.exports = class extends BaseRest {
 
@@ -18,48 +18,95 @@ module.exports = class extends BaseRest {
     }
     // 获取 文件信息
     let file = think.extend({}, this.file('file'))
+    console.log(file)
     let filePath = file.path
     let extname = path.extname(file.name)
-    let basename = path.basename(filePath)+extname;
+    let basename = path.basename(filePath) + extname;
     // let type = file.type
     // console.log(file.type)
 
+    console.log(file.name + ":" + extname)
+
+    // if (oneOf(file.type, ['audio/mpeg', 'audio/mp3'])) {
+    //   return this.success(file.originalFilename)
+    // }
     // 执行文件上传逻辑
     if (config.type === 'qiniu') {
       let service = this.service('qiniu')
       let upload = await service.upload(filePath, basename, config.option)
       if (!think.isEmpty(upload)) {
         let data = {
+          // 验证权限 后获取
           author: this.ctx.state.user.id,
-          title: file.originalFilename,
+          title: file.name.split('.')[0],
           name: upload.hash,
           // path: '/upload/picture/' + dateformat(new Date().getTime(), "Y-m-d") + '/' + basename,
           type: 'attachment',
           mime_type: file.type,
           guid: "http://" + config.option.domain + "/" + upload.key,
           create_time: new Date().getTime(),
-          status: 1,
+          status: 'publish',
         }
+        let fileUrl = 'http://' + config.option.domain + '/' + upload.key
         let _post_id = await postModel.add(data);
+
+        let retData = {
+          id: _post_id,
+          url: fileUrl,
+          title: data.title
+        }
+        if (oneOf(file.type, ['audio/mpeg', 'audio/mp3'])) {
+          Promise.all([
+            postModel.addMeta(_post_id, '_attachment_metadata', '{}'),
+            postModel.addMeta(_post_id, '_attachment_file', fileUrl)
+          ])
+          // Promise.all([
+          // new mediaTags.Reader(data.guid)
+          // .setTagsToRead(['title', 'artist', 'album', 'TLE'])
+          // .read({
+          //   onSuccess: function(tag) {
+          //     console.log(tag)
+          //     // console.log(JSON.stringify(tag) + '----');
+          //   },
+          //   onError: function(error) {
+          //     console.log(':(', error.type, error.info);
+          //   }
+          // })
+          //
+          // mediaTags.read(data.guid, {
+          //   onSuccess: function(tag) {
+          // Promise.all([
+          //   postModel.addMeta(_post_id, '_attachment_metadata', JSON.stringify(tag)),
+          //   postModel.addMeta(_post_id, '_attachment_file', upload.key)
+          // ])
+          // console.log(tag);
+          // },
+          // onError: function(error) {
+          //   console.log(':(', error.type, error.info);
+          // }
+          // })
+          // ])
+        }
         if (oneOf(file.type, ['image/jpg', 'image/jpeg', 'image/png'])) {
           try {
             const _attachment_metadata = await sharp(file.path).metadata();
             delete _attachment_metadata.exif;
             Promise.all([
               postModel.addMeta(_post_id, '_attachment_metadata', _attachment_metadata),
-              postModel.addMeta(_post_id, '_attachment_file', upload.key)
+              postModel.addMeta(_post_id, '_attachment_file', fileUrl)
             ])
-            return this.success(upload)
+            return this.success(retData)
           } catch (e) {
             return this.fail()
             console.error(e)
           }
         }
-        return this.success(upload)
+        return this.success(retData)
       }
     }
 
   }
+
   /**
    * 文件上传
    * @returns {Promise.<*>}

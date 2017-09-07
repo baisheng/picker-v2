@@ -85,7 +85,7 @@ module.exports = class extends think.Controller {
     if (!this.id) {
       return this.fail('params error');
     }
-    const pk = await this.modelInstance.getPk();
+    const pk = this.modelInstance.pk;
     const rows = await this.modelInstance.where({[pk]: this.id}).delete();
     return this.success({affectedRows: rows});
   }
@@ -97,7 +97,8 @@ module.exports = class extends think.Controller {
     if (!this.id) {
       return this.fail('params error');
     }
-    const pk = await this.modelInstance.getPk();
+    const pk = this.modelInstance.pk;
+    // const pk = await this.modelInstance.getPk();
     const data = this.post();
     delete data[pk];
     if (think.isEmpty(data)) {
