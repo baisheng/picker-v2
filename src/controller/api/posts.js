@@ -37,9 +37,14 @@ module.exports = class extends BaseRest {
       switch (query.type) {
         case 'podcast':
           fields.push('content')
-          // query = {status: ['!=', 'delete'], id: id, parent: id, _logic: 'OR'}
-          query = {status: ['!=', 'delete'], _complex:{id: id, parent: id, _logic: 'OR'}}
-          return await this.getPodcast(query, fields)
+          if (!think.isEmpty(id)) {
+            // query = {status: ['!=', 'delete'], id: id, parent: id, _logic: 'OR'}
+            query = {status: ['!=', 'delete'], _complex: {id: id, parent: id, _logic: 'OR'}}
+            return await this.getPodcast(query, fields)
+          } else {
+            query = {status: ['!=', 'delete'], type: type}
+            return await this.getPodcastList(query, fields)
+          }
           break;
         case "article":
           break;
@@ -68,6 +73,46 @@ module.exports = class extends BaseRest {
     // return this.success(list)
   }
 
+  async getPodcastList (query, fields) {
+    let list = await this.modelInstance.where(query).field(fields.join(",")).order('sort ASC').page(this.get('page'), 100).countSelect()
+
+    // 处理播放列表音频 Meta 信息
+    _formatMeta(list.data)
+    // 根据 Meta 信息中的音频附件 id 查询出音频地址
+    const metaModel = this.model('postmeta', {orgId: this.orgId})
+    for (let item of list.data) {
+      item.url = ''
+      // 如果有音频
+      if (!Object.is(item.meta['_audio_id'], undefined)) {
+        // 音频播放地址
+        item.url = await metaModel.getAttachment('file', item.meta['_audio_id'])
+      }
+      // 如果有作者信息
+      if (!Object.is(item.meta['_author_id'], undefined)) {
+        // item.author =
+        // 查询 出对应的作者信息
+      }
+      const user = this.ctx.state.user
+      item.author = user
+      // 音频播放的歌词信息
+      // lrc
+
+      // 如果有封面 默认是 thumbnail 缩略图，如果是 podcast 就是封面特色图片 featured_image
+      // if (!Object.is(item.meta['_featured_image']))
+      if (!Object.is(item.meta['_thumbnail_id'], undefined)) {
+        // item.thumbnail = {
+        //   id: item.meta['_thumbnail_id']
+        // }
+        // item.thumbnail.url = await metaModel.getAttachment('file', item.meta['_thumbnail_id'])
+        item.featured_image = await metaModel.getAttachment('file', item.meta['_thumbnail_id'])
+        // item.thumbnal = await metaModel.getThumbnail({post_id: item.id})
+      }
+    }
+    // 处理分类及内容层级
+    await this.dealTerms(list)
+    // 返回一条数据
+    return this.success(list.data)
+  }
   /**
    * 获取播客类型的内容
    *
