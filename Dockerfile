@@ -1,6 +1,6 @@
 # 使用DaoCloud的Ubuntu镜像
 #FROM daocloud.io/library/ubuntu:14.04
-FROM daocloud.io/library/node:latest
+FROM daocloud.io/library/node:8
 
 # 设置镜像作者
 MAINTAINER Basil <baisheng@gmail.com>
