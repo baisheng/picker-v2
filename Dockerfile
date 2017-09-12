@@ -30,7 +30,7 @@ WORKDIR /app
 ADD package.json /app/package.json
 # 使用淘宝的npm镜像
 #RUN npm install --production -d --registry=https://registry.npm.taobao.org
-RUN npm install
+RUN npm install --production -d
 # 添加源代码
 ADD . /app
 # 运行app.js
