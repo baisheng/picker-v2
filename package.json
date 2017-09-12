@@ -1,10 +1,9 @@
 {
-  "name": "thinkjs-application",
+  "name": "picker-api",
   "description": "application created by thinkjs",
   "version": "1.0.0",
   "scripts": {
     "start": "node development.js",
-    "compile": "babel --no-babelrc src/ --presets think-node --out-dir app/",
     "lint": "eslint src/",
     "lint-fix": "eslint --fix src/"
   },
@@ -40,13 +39,9 @@
     "urllib": "^2.24.0"
   },
   "devDependencies": {
-    "babel-cli": "^6.24.1",
-    "babel-preset-think-node": "^1.0.0",
     "eslint": "^4.2.0",
     "eslint-config-think": "^1.0.0",
     "node-notifier": "^5.0.2",
-    "think-babel": "^1.0.3",
-    "think-inspect": "0.0.2",
     "think-watcher": "^3.0.0"
   },
   "repository": "",
