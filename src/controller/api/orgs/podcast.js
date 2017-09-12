@@ -1,4 +1,4 @@
-const BaseRest = require('../common/rest')
+const BaseRest = require('./common/rest')
 module.exports = class extends BaseRest {
   /**
    * 获取分类信息
@@ -7,9 +7,12 @@ module.exports = class extends BaseRest {
    * @returns {Promise.<*>}
    */
   async getAction () {
+    console.log('lalalala')
     // console.log(this.ctx.state.user)
     let id = this.get('id')
-    let type = this.get('type')
+    console.log('lala')
+    console.log(id + '---')
+    let type = 'podcast'
     let query = {}
     query.status = ['NOT IN', 'trash']
     // query.type = "";

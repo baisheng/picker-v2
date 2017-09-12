@@ -1,14 +1,17 @@
 module.exports = [
-  [/\/api\/request_code/, 'api/public', 'rest'],
-  [/\/api\/verify_code/, 'api/public', 'rest'],
-  [/\/api\/signin/, 'api/signin', 'rest'],
-  [/\/api\/org/, 'api/org', 'rest'],
-  [/\/api\/orgs(?:\/(\w+))?/, 'api/orgs', 'rest'],
-  [/\/api\/file(?:\/(\w+))?/, 'api/file', 'rest'],
-  [/\/api\/orgs\/subdomain_validation\/(?:\/(\w+))?/, 'api/orgs', 'rest'],
-  // ['/api/orgs/subdomain_validation/:subdomain', 'api/orgs:1/', 'get'],
-  [/\/api\/podcast(?:\/(\d+))?/, 'api/posts?id=:1&type=podcast', 'rest'],
-  [/\/api\/posts(?:\/(\d+))?/, 'api/posts?id=:1', 'rest'],
-  [/\/api\/users(?:\/(\d+))?/, 'api/users?id=:1', 'rest'],
-  [/\/api\/options(?:\/(\w+))?/, 'api/options?key=:1', 'rest']
+  [/\/rest\/orgs\/(\d+)\/podcast(?:\/(\d+))?/, 'api/orgs/posts?orgId=:1&id=:2&type=podcast', 'rest'],
+  [/\/rest\/orgs\/(\d+)\/(\w+)(?:\/(\d+))?/, 'api/orgs/:2/?orgId=:1&id=:3', 'rest'],
+
+  // [/\/rest\/request_code/, 'api/public', 'rest'],
+  // [/\/rest\/verify_code/, 'api/public', 'rest'],
+  // [/\/rest\/signin/, 'api/signin', 'rest'],
+  // [/\/rest\/org/, 'api/org', 'rest'],
+  // [/\/rest\/orgs(?:\/(\w+))?/, 'api/orgs', 'rest'],
+  // [/\/rest\/file(?:\/(\w+))?/, 'api/file', 'rest'],
+  // [/\/rest\/orgs\/subdomain_validation\/(?:\/(\w+))?/, 'api/orgs', 'rest'],
+  // ['/rest/orgs/subdomain_validation/:subdomain', 'api/orgs:1/', 'get'],
+  // [/\/rest\/podcast(?:\/(\d+))?/, 'api/posts?id=:1&type=podcast', 'rest'],
+  // [/\/rest\/posts(?:\/(\d+))?/, 'api/posts?id=:1', 'rest'],
+  // [/\/rest\/users(?:\/(\d+))?/, 'api/users?id=:1', 'rest'],
+  // [/\/rest\/options(?:\/(\w+))?/, 'api/options?key=:1', 'rest']
 ];

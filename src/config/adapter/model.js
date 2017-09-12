@@ -17,8 +17,8 @@ module.exports = {
     database: 'picker',
     prefix: 'picker_',
     encoding: 'utf8',
-    host: '127.0.0.1',
-    port: '3311',
+    host: isDev ? '127.0.0.1': '114.55.230.6',
+    port: isDev ? '3311' : '3318',
     user: 'root',
     password: 'ub08JASJQy9s',
     dateStrings: true

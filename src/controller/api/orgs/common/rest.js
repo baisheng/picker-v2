@@ -7,10 +7,10 @@ module.exports = class extends think.Controller {
     // console.log('constructor 1')
     // console.log(ctx.originalUrl)
     super(ctx);
-    console.log(ctx.url)
-    console.log(ctx.origin)
-    console.log(ctx.host)
-    console.log(ctx.subdomains)
+    // console.log(ctx.url)
+    // console.log(ctx.origin)
+    // console.log(ctx.host)
+    // console.log(ctx.subdomains)
     // 从缓存中获取机构列表
 
     this.resource = this.getResource();
@@ -24,10 +24,12 @@ module.exports = class extends think.Controller {
     //   let _orgs = await this.cache('orgs')
     //   return JSON.parse(_orgs)
     // }
-    let orgs = await think.cache('orgs')
+    // let orgs = await think.cache('orgs')
     // console.log(JSON.parse(orgs)['vanq.picker.la'])
     // orgs = JSON.parse(orgs)
-    this.orgId = orgs[this.ctx.host]
+    // this.orgId = orgs[this.ctx.host]
+    this.orgId = this.get('orgId')
+    console.log(this.orgId + '-----')
     this.cachePrefix = 'picker_' + this.orgId + '_'
     // console.log(this.orgId + '-----')
     if (!think.isEmpty(this.orgId)) {
