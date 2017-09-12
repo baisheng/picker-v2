@@ -5,8 +5,8 @@ FROM daocloud.io/library/node:latest
 # 设置镜像作者
 MAINTAINER Basil <baisheng@gmail.com>
 # 设置时区
-RUN sudo sh -c "echo 'Asia/Shanghai' > /etc/timezone" && \
-    sudo dpkg-reconfigure -f noninteractive tzdata
+RUN sh -c "echo 'Asia/Shanghai' > /etc/timezone" && \
+    dpkg-reconfigure -f noninteractive tzdata
 # 使用阿里云的Ubuntu镜像
 RUN echo '\n\
 deb http://mirrors.aliyuncs.com/ubuntu/ trusty main restricted universe multiverse\n\
