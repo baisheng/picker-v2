@@ -1,5 +1,5 @@
 /* eslint-disable prefer-reflect */
-const BaseRest = require('../common/rest')
+const BaseRest = require('./common/rest')
 module.exports = class extends BaseRest {
 
   async getAction() {

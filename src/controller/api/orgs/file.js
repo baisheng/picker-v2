@@ -3,7 +3,7 @@ const path = require('path');
 const fs = require('fs')
 const sharp = require('sharp')
 const mediaTags = require("jsmediatags")
-const BaseRest = require('../common/rest')
+const BaseRest = require('./common/rest')
 module.exports = class extends BaseRest {
 
   async postAction () {
@@ -19,7 +19,7 @@ module.exports = class extends BaseRest {
     }
     // 获取 文件信息
     const file = think.extend({}, this.file('file'))
-    console.log(file)
+    // console.log(file)
     const filePath = file.path
     const extname = path.extname(file.name)
     const basename = path.basename(filePath) + extname;

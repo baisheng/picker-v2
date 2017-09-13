@@ -1,4 +1,5 @@
-//生成6位的随机数
+/* eslint-disable prefer-reflect */
+// 生成6位的随机数
 global.Random = () => {
   let num = ''
   for (let i = 0; i < 6; i++) {
@@ -15,10 +16,10 @@ global.Random = () => {
  */
 /* global _ip2int(ip)*/
 global._ip2int = function (ip) {
-  var num = 0;
+  let num = 0;
   ip = ip.split(".");
   num = Number(ip[0]) * 256 * 256 * 256 + Number(ip[1]) * 256 * 256 + Number(ip[2]) * 256 + Number(ip[3]);
-  num = num >>> 0;
+  num >>>= 0;
   return num;
 }
 /**
@@ -29,8 +30,8 @@ global._ip2int = function (ip) {
  */
 /*global _int2ip(num: number) */
 global._int2iP = function (num) {
-  var str;
-  var tt = new Array();
+  let str;
+  const tt = new Array();
   tt[0] = (num >>> 24) >>> 0;
   tt[1] = ((num << 8) >>> 24) >>> 0;
   tt[2] = (num << 16) >>> 24;
@@ -65,12 +66,13 @@ global.unique = function (arr) {
  */
 /* global arr_to_tree */
 global.arr_to_tree = function (data, parent) {
-  var result = [], temp;
-  var length = data.length;
+// eslint-disable-next-line one-var
+  let result = [], temp;
+  const length = data.length;
 
   // console.log(length + "======")
 
-  for (var i = 0; i < length; i++) {
+  for (let i = 0; i < length; i++) {
 
     if (data[i].parent === parent) {
       result.push(data[i]);
@@ -96,12 +98,12 @@ global.oneOf = function (value, validList) {
 }
 
 global._formatMeta = (list) => {
-  let _items = [];
+  const _items = [];
 
-  for (let item of list) {
+  for (const item of list) {
     item.meta = {};
     if (item.metas.length > 0) {
-      for (let meta of item.metas) {
+      for (const meta of item.metas) {
         // console.log(meta.meta_key + ":" + meta.meta_value);
         item.meta[meta.meta_key] = meta.meta_value;
       }

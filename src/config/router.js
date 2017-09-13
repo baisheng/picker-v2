@@ -5,7 +5,7 @@ module.exports = [
   // [/\/rest\/request_code/, 'api/public', 'rest'],
   // [/\/rest\/verify_code/, 'api/public', 'rest'],
   // [/\/rest\/signin/, 'api/signin', 'rest'],
-  // [/\/rest\/org/, 'api/org', 'rest'],
+  [/\/rest\/org\/(\d+)?/, 'api/org', 'rest'],
   // [/\/rest\/orgs(?:\/(\w+))?/, 'api/orgs', 'rest'],
   // [/\/rest\/file(?:\/(\w+))?/, 'api/file', 'rest'],
   // [/\/rest\/orgs\/subdomain_validation\/(?:\/(\w+))?/, 'api/orgs', 'rest'],
