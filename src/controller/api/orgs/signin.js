@@ -1,10 +1,8 @@
-'use strict';
-
 const BaseRest = require('./common/rest')
 // import speakeasy from 'speakeasy';
 const jwt = require('jsonwebtoken')
 
-export default class extends BaseRest {
+module.exports = class extends BaseRest {
   async postAction() {
     console.log(JSON.stringify(this.post()))
     // if (this.ctx.isPost) {
@@ -61,12 +59,12 @@ export default class extends BaseRest {
       return this.fail('ACCOUNT_ERROR');
     }
 
-    //帐号是否被禁用，且投稿者不允许登录
+    // 帐号是否被禁用，且投稿者不允许登录
     if ((userInfo.status | 0) !== 1 || userInfo.type === 3) {
       return this.fail('ACCOUNT_FORBIDDEN');
     }
 
-    //校验密码
+    // 校验密码
     let password = this.post('password');
     if (!userModel.checkPassword(userInfo, password)) {
       return this.fail('ACCOUNT_ERROR');

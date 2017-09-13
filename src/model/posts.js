@@ -1,11 +1,9 @@
-'use strict';
-
-import Base from './base';
+const Base = require('./base');
 
 /**
  * model
  */
-export default class extends Base {
+module.exports = class extends Base {
   // constructor(...args) {
   //   super(...args);
   //   this.relation = {

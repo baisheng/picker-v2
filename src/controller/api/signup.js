@@ -1,10 +1,8 @@
-'use strict';
-
 const BaseRest = require('../common/rest')
 // import speakeasy from 'speakeasy';
 const jwt = require('jsonwebtoken')
 
-export default class extends BaseRest {
+module.exports = class extends BaseRest {
 
   async postAction() {
     // if (this.ctx.isPost) {

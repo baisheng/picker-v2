@@ -1,5 +1,6 @@
+const Base = require('./base');
+
 const redisCache = require('think-cache-redis');
-import Base from './base';
 
 module.exports = class extends Base {
   constructor(...args) {

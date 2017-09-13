@@ -1,6 +1,6 @@
 /* eslint-disable prefer-promise-reject-errors,no-console */
 // const {PasswordHash} = require('phpass');
-import Base from './base';
+const Base = require('./base');
 
 module.exports = class extends Base {
   // constructor(...args) {

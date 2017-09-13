@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const path = require('path');
 const isDev = think.env === 'development';
 const jwt = require('koa-jwt');
@@ -35,29 +36,27 @@ module.exports = [
       return (ctx, next) => {
         // Custom 401 handling if you don't want to expose koa-jwt errors to users
         return next().catch((err) => {
+          // eslint-disable-next-line yoda
           if (401 === err.status) {
-            console.log(err)
             ctx.status = 401;
             ctx.body = 'Protected resource, use Authorization header to get access\n';
           } else {
             ctx.body = 'Protected resource, use Authorization header to get access\n';
             throw err;
           }
-        })
-      }
+        });
+      };
     }
   },
 
   {
     handle: 'router',
-    options: {
-    }
+    options: {}
   },
   // TODO: 中间件的顺序会对请求有影响，如文件上传、 权限验证等
   {
     handle: cors,
-    options: {
-    }
+    options: {}
   },
   {
     handle: jwt,
