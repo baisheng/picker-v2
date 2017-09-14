@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken')
 module.exports = class extends BaseRest {
   async postAction() {
     console.log(JSON.stringify(this.post()))
+    console.log('----- login ....')
     // if (this.ctx.isPost) {
     const userLogin = this.post('user_login');
     const userModel = this.model('users', {orgId: this.orgId});
@@ -35,7 +36,7 @@ module.exports = class extends BaseRest {
    * @return {} []
    */
   async _loginAction() {
-    //二步验证
+    // 二步验证
     // let model = this.model('options');
     // let options = await model.getOptions();
     // if(options.two_factor_auth){
@@ -51,10 +52,10 @@ module.exports = class extends BaseRest {
     //     }
     // }
 
-    //校验帐号和密码
-    let username = this.post('username');
-    let userModel = this.model('users');
-    let userInfo = await userModel.where({name: username}).find();
+    // 校验帐号和密码
+    const username = this.post('username');
+    const userModel = this.model('users');
+    const userInfo = await userModel.where({name: username}).find();
     if (think.isEmpty(userInfo)) {
       return this.fail('ACCOUNT_ERROR');
     }
@@ -65,7 +66,7 @@ module.exports = class extends BaseRest {
     }
 
     // 校验密码
-    let password = this.post('password');
+    const password = this.post('password');
     if (!userModel.checkPassword(userInfo, password)) {
       return this.fail('ACCOUNT_ERROR');
     }
@@ -88,12 +89,12 @@ module.exports = class extends BaseRest {
    * update user password
    */
   async passwordAction() {
-    let userInfo = await this.session('userInfo') || {};
+    const userInfo = await this.session('userInfo') || {};
     if (think.isEmpty(userInfo)) {
       return this.fail('USER_NOT_LOGIN');
     }
 
-    let rows = await this.model('user').saveUser({
+    const rows = await this.model('user').saveUser({
       password: this.post('password'),
       id: userInfo.id
     }, this.ip());

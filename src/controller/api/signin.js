@@ -3,8 +3,9 @@ const BaseRest = require('../common/rest')
 const jwt = require('jsonwebtoken')
 
 module.exports = class extends BaseRest {
-  async postAction() {
+  async postAction () {
     console.log(JSON.stringify(this.post()))
+    console.log('----- login ....')
     // if (this.ctx.isPost) {
     const userLogin = this.post('user_login');
     const userModel = this.model('users', {orgId: this.orgId});
@@ -24,7 +25,7 @@ module.exports = class extends BaseRest {
       return this.fail('ACCOUNT_ERROR');
     }
     // 获取签名盐
-    const token = jwt.sign(userInfo, 'shared-secret', { expiresIn: '3d' })
+    const token = jwt.sign(userInfo, 'shared-secret', {expiresIn: '3d'})
     // user: userInfo.user_login,
     return this.success({user: userInfo.user_login, token: token});
     // }
@@ -34,8 +35,8 @@ module.exports = class extends BaseRest {
    * login
    * @return {} []
    */
-  async _loginAction() {
-    //二步验证
+  async _loginAction () {
+    // 二步验证
     // let model = this.model('options');
     // let options = await model.getOptions();
     // if(options.two_factor_auth){
@@ -51,7 +52,7 @@ module.exports = class extends BaseRest {
     //     }
     // }
 
-    //校验帐号和密码
+    // 校验帐号和密码
     let username = this.post('username');
     let userModel = this.model('users');
     let userInfo = await userModel.where({name: username}).find();
@@ -59,12 +60,12 @@ module.exports = class extends BaseRest {
       return this.fail('ACCOUNT_ERROR');
     }
 
-    //帐号是否被禁用，且投稿者不允许登录
+    // 帐号是否被禁用，且投稿者不允许登录
     if ((userInfo.status | 0) !== 1 || userInfo.type === 3) {
       return this.fail('ACCOUNT_FORBIDDEN');
     }
 
-    //校验密码
+    // ea校验密码
     let password = this.post('password');
     if (!userModel.checkPassword(userInfo, password)) {
       return this.fail('ACCOUNT_ERROR');
@@ -79,7 +80,7 @@ module.exports = class extends BaseRest {
    * logout
    * @return {}
    */
-  async logoutAction() {
+  async logoutAction () {
     await this.session('userInfo', '');
     return this.redirect('/');
   }
@@ -87,7 +88,7 @@ module.exports = class extends BaseRest {
   /**
    * update user password
    */
-  async passwordAction() {
+  async passwordAction () {
     let userInfo = await this.session('userInfo') || {};
     if (think.isEmpty(userInfo)) {
       return this.fail('USER_NOT_LOGIN');
