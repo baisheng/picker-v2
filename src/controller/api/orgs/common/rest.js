@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+/* eslint-disable no-console,prefer-reflect */
 const path = require('path');
 const assert = require('assert');
 
