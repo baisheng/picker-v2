@@ -1,18 +1,18 @@
 const Base = require('./base.js');
 // const jwt = require('koa-jwt');
 const jwt = require('jsonwebtoken')
-const Redis = require('ioredis');
-const redis = new Redis();
+// const Redis = require('ioredis');
+// const redis = new Redis();
 module.exports = class extends Base {
   // indexAction() {
   //   return this.display();
   // }
-  async redisAction() {
-    redis.set('foo', 'bar')
-    redis.get('foo').then(function (result) {
-      console.log(result);
-    });
-  }
+  // async redisAction() {
+  //   redis.set('foo', 'bar')
+  //   redis.get('foo').then(function (result) {
+  //     console.log(result);
+  //   });
+  // }
   async loginAction() {
     if (this.ctx.isPost) {
       const userLogin = this.post('user_login');
