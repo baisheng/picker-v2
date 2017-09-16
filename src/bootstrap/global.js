@@ -113,3 +113,9 @@ global._formatMeta = (list) => {
   }
   return _items
 }
+
+global._formatOrgs = (orgs) => {
+  for (const item of orgs) {
+    console.log(JSON.stringify(item) + '----')
+  }
+}

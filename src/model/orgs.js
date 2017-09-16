@@ -1,5 +1,6 @@
+/* eslint-disable no-return-await */
 module.exports = class extends think.Model {
-  get relation() {
+  get relation () {
     return {
       metas: {
         type: think.Model.HAS_MANY,
@@ -10,21 +11,24 @@ module.exports = class extends think.Model {
   }
 
   async get () {
-    return await this.list();
+    const orgs = await this.list();
+    return orgs
   }
 
-  async list() {
+  async list () {
     const map = {}
     const list = await this.where(map).field(['id', 'domain', 'subdomain']).select()
-    let obj = {}
+    const obj = {}
     list.forEach(v => {
-      if (!think.isEmpty(v['domain'])) {
-        obj[v.domain] = v.id
+      let domain = v.domain
+      if (think.isEmpty(domain)) {
+        domain = v.subdomain
       }
-      obj[v.subdomain] = v.id
+      obj[domain] = v.id
+      // 缓存进 redis
+      think.cache(domain.toString(), v.id.toString())
     })
 
-    // console.log(JSON.stringify(obj))
     return obj
   }
 }
