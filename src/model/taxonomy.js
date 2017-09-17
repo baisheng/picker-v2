@@ -1,3 +1,4 @@
+/* eslint-disable no-return-await */
 const Base = require('./base');
 
 module.exports = class extends Base {
@@ -34,7 +35,7 @@ module.exports = class extends Base {
      */
     let _terms = [];
     taxonomies.forEach((item) => {
-      _terms.push(think._.filter(JSON.parse(all_terms), {id: item.term_id}));
+      _terms.push(think._.filter(all_terms, {id: item.term_id}));
     });
 
     return await think._.flattenDeep(_terms);
@@ -44,7 +45,7 @@ module.exports = class extends Base {
       let _cache = await think.cache(this.tablePrefix + 'all_terms')
       if (think.isEmpty(_cache)) {
         let _data = await this.model('terms', {orgId: this.orgId}).select();
-        await think.cache(this.tablePrefix + 'all_terms', JSON.stringify(_data))
+        await think.cache(this.tablePrefix + 'all_terms', _data)
       }
       return _cache
     } else {

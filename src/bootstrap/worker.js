@@ -6,7 +6,7 @@ think.beforeStartServer(async () => {
   // 获取全部组织账户信息并缓存
   const orgs = await think.model('orgs').list()
   // console.log(JSON.stringify(orgs))
-  await think.cache('orgs', JSON.stringify(orgs))
+  await think.cache('orgs', orgs)
   const options = await think.model('options').get(true)
   // console.log(JSON.stringify(options))
   think.config('options', options)

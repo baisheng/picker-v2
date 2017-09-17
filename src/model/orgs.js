@@ -26,7 +26,7 @@ module.exports = class extends think.Model {
       }
       obj[domain] = v.id
       // 缓存进 redis
-      think.cache(domain.toString(), v.id.toString())
+      think.cache(domain.toString(), v.id)
     })
 
     return obj

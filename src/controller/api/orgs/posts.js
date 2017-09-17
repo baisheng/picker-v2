@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const BaseRest = require('./common/rest')
 module.exports = class extends BaseRest {
   /**
@@ -7,9 +8,8 @@ module.exports = class extends BaseRest {
    * @returns {Promise.<*>}
    */
   async getAction () {
-    // console.log(this.ctx.state.user)
-    let id = this.get('id')
-    let type = this.get('type')
+    const id = this.get('id')
+    const type = this.get('type')
     let query = {}
     query.status = ['NOT IN', 'trash']
     // query.type = "";
@@ -74,21 +74,21 @@ module.exports = class extends BaseRest {
   }
 
   async getPodcastList (query, fields) {
-    let list = await this.modelInstance.where(query).field(fields.join(",")).order('sort ASC').page(this.get('page'), 100).countSelect()
+    const list = await this.modelInstance.where(query).field(fields.join(",")).order('sort ASC').page(this.get('page'), 100).countSelect()
 
     // 处理播放列表音频 Meta 信息
     _formatMeta(list.data)
     // 根据 Meta 信息中的音频附件 id 查询出音频地址
     const metaModel = this.model('postmeta', {orgId: this.orgId})
-    for (let item of list.data) {
+    for (const item of list.data) {
       item.url = ''
       // 如果有音频
-      if (!Object.is(item.meta['_audio_id'], undefined)) {
+      if (!Object.is(item.meta._audio_id, undefined)) {
         // 音频播放地址
-        item.url = await metaModel.getAttachment('file', item.meta['_audio_id'])
+        item.url = await metaModel.getAttachment('file', item.meta._audio_id)
       }
       // 如果有作者信息
-      if (!Object.is(item.meta['_author_id'], undefined)) {
+      if (!Object.is(item.meta._author_id, undefined)) {
         // item.author =
         // 查询 出对应的作者信息
       }
@@ -99,12 +99,12 @@ module.exports = class extends BaseRest {
 
       // 如果有封面 默认是 thumbnail 缩略图，如果是 podcast 就是封面特色图片 featured_image
       // if (!Object.is(item.meta['_featured_image']))
-      if (!Object.is(item.meta['_thumbnail_id'], undefined)) {
+      if (!Object.is(item.meta._thumbnail_id, undefined)) {
         // item.thumbnail = {
         //   id: item.meta['_thumbnail_id']
         // }
         // item.thumbnail.url = await metaModel.getAttachment('file', item.meta['_thumbnail_id'])
-        item.featured_image = await metaModel.getAttachment('file', item.meta['_thumbnail_id'])
+        item.featured_image = await metaModel.getAttachment('file', item.meta._thumbnail_id)
         // item.thumbnal = await metaModel.getThumbnail({post_id: item.id})
       }
     }
@@ -119,22 +119,22 @@ module.exports = class extends BaseRest {
    * @returns {Promise.<void>}
    */
   async getPodcast (query, fields) {
-    let list = await this.modelInstance.where(query).field(fields.join(",")).order('sort ASC').page(this.get('page'), 100).countSelect()
+    const list = await this.modelInstance.where(query).field(fields.join(",")).order('sort ASC').page(this.get('page'), 100).countSelect()
 
     // 处理播放列表音频 Meta 信息
     _formatMeta(list.data)
 
     // 根据 Meta 信息中的音频附件 id 查询出音频地址
     const metaModel = this.model('postmeta', {orgId: this.orgId})
-    for (let item of list.data) {
+    for (const item of list.data) {
       item.url = ''
       // 如果有音频
-      if (!Object.is(item.meta['_audio_id'], undefined)) {
+      if (!Object.is(item.meta._audio_id, undefined)) {
         // 音频播放地址
-        item.url = await metaModel.getAttachment('file', item.meta['_audio_id'])
+        item.url = await metaModel.getAttachment('file', item.meta._audio_id)
       }
       // 如果有作者信息
-      if (!Object.is(item.meta['_author_id'], undefined)) {
+      if (!Object.is(item.meta._author_id, undefined)) {
         // item.author =
         // 查询 出对应的作者信息
       }
@@ -145,12 +145,12 @@ module.exports = class extends BaseRest {
 
       // 如果有封面 默认是 thumbnail 缩略图，如果是 podcast 就是封面特色图片 featured_image
       // if (!Object.is(item.meta['_featured_image']))
-      if (!Object.is(item.meta['_thumbnail_id'], undefined)) {
+      if (!Object.is(item.meta._thumbnail_id, undefined)) {
         // item.thumbnail = {
         //   id: item.meta['_thumbnail_id']
         // }
         // item.thumbnail.url = await metaModel.getAttachment('file', item.meta['_thumbnail_id'])
-        item.featured_image = await metaModel.getAttachment('file', item.meta['_thumbnail_id'])
+        item.featured_image = await metaModel.getAttachment('file', item.meta._thumbnail_id)
         // item.thumbnal = await metaModel.getThumbnail({post_id: item.id})
       }
     }
@@ -166,14 +166,14 @@ module.exports = class extends BaseRest {
    * @returns {Promise.<*>}
    */
   async dealTerms (list) {
-    let _taxonomy = this.model('taxonomy', {orgId: this.orgId})
-    for (let item of list.data) {
+    const _taxonomy = this.model('taxonomy', {orgId: this.orgId})
+    for (const item of list.data) {
       item.terms = await _taxonomy.getTermsByObject(item.id)
     }
     // 处理内容层级
     // let treeList = await arr_to_tree(list.data, 0);
     list.data = await arr_to_tree(list.data, 0);
-    ;
+    
 
     return list
   }
@@ -181,7 +181,9 @@ module.exports = class extends BaseRest {
   async postAction () {
     // console.log(this.ctx.state.user)
     // let type = this.get('type')
-    let data = this.post()
+    console.log(this.ctx.state.user)
+    const data = this.post()
+    console.log(JSON.stringify(data))
     if (think.isEmpty(data.type)) {
       data.type = 'podcast'
     }
@@ -192,7 +194,7 @@ module.exports = class extends BaseRest {
     if (think.isEmpty(data.status)) {
       data.status = 'auto-draft';
     }
-    let res = await this.modelInstance.add(data)
+    const res = await this.modelInstance.add(data)
 
     return this.success(res)
   }
@@ -219,10 +221,10 @@ module.exports = class extends BaseRest {
     await this.modelInstance.where({[pk]: this.id}).update(data);
     // }
     // 更新 meta 图片数据
-    if (!Object.is(data['meta'], undefined)) {
+    if (!Object.is(data.meta, undefined)) {
       const metaModel = await this.model('postmeta', {orgId: this.orgId})
       // 保存 meta 信息
-      await metaModel.save(this.id, data['meta'])
+      await metaModel.save(this.id, data.meta)
     }
     // return this.success({affectedRows: rows});
     // 返回的状态

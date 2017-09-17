@@ -29,9 +29,7 @@ module.exports = class extends think.Controller {
     // orgs = JSON.parse(orgs)
     // this.orgId = orgs[this.ctx.host]
     this.orgId = this.get('orgId')
-    console.log(this.orgId + '-----')
     this.cachePrefix = 'picker_' + this.orgId + '_'
-    // console.log(this.orgId + '-----')
     if (!think.isEmpty(this.orgId)) {
       this.modelInstance = this.model(this.resource, {orgId: this.orgId});
     }

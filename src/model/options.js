@@ -13,18 +13,20 @@ module.exports = class extends Base {
     if (flag) {
       await think.cache(this.cacheKey, null)
     }
-    let ret = await think.cache(this.cacheKey)
+    const ret = await think.cache(this.cacheKey)
 
     if (think.isEmpty(ret)) {
-      let data = await this.select();
-      let result = {};
+      const data = await this.select();
+      const result = {};
       data.forEach(item => {
         result[item.key] = JSON.parse(item.value);
       });
-      await think.cache(this.cacheKey, JSON.stringify(result))
+      // await think.cache(this.cacheKey, JSON.stringify(result))
+      await think.cache(this.cacheKey, result)
     }
-    let _options = await think.cache(this.cacheKey)
-    return JSON.parse(_options)
+    const _options = await think.cache(this.cacheKey)
+    return _options
+    // return JSON.parse(_options)
   }
 
 
@@ -33,7 +35,7 @@ module.exports = class extends Base {
     console.log(key + ": " + value);
 
 
-    let data = think.isObject(key) ? think.extend({}, key) : {[key]: value};
+    const data = think.isObject(key) ? think.extend({}, key) : {[key]: value};
     let cacheData = await think.cache(this.cacheKey, undefined, this.cacheOptions);
 
     // console.log(JSON.stringify(cacheData))
@@ -41,28 +43,29 @@ module.exports = class extends Base {
     if (think.isEmpty(cacheData)) {
       cacheData = await this.getOptions();
     }
-    let changedData = {};
-    for (let key in data) {
+    const changedData = {};
+    for (const key in data) {
       if (data[key] !== cacheData[key]) {
         changedData[key] = data[key];
       }
     }
 
-    console.log(JSON.stringify(changedData) + "-----")
-    let json_sql = `update picker_resume.picker_options set value = json_set(value,'$.${value.key}', '${value.value}') where \`key\` = '${key}'`;
+    // console.log(JSON.stringify(changedData) + "-----")
+    const json_sql = `update picker_resume.picker_options set value = json_set(value,'$.${value.key}', '${value.value}') where \`key\` = '${key}'`;
 
-    console.log(json_sql)
+    // console.log(json_sql)
     // console.log(JSON.stringify(changedData))
-    //data is not changed
+    // data is not changed
     if (think.isEmpty(changedData)) {
       return;
     }
-    let p1 = think.cache(this.cacheKey, think.extend(cacheData, changedData), this.cacheOptions);
+    const p1 = think.cache(this.cacheKey, think.extend(cacheData, changedData), this.cacheOptions);
 
-    let promises = [p1];
+    const promises = [p1];
+// eslint-disable-next-line guard-for-in
     for (let key in changedData) {
-      let value = changedData[key];
-      let exist = await this.where({key: key}).count('key');
+      const value = changedData[key];
+      const exist = await this.where({key: key}).count('key');
       let p;
       this.execute(json_sql);
       // let json_sql = `update picker_resume.picker_options set value = json_set(value,'$.${key}', '${value}') where \`key\` = \`${key}\``;
@@ -77,7 +80,7 @@ module.exports = class extends Base {
     await Promise.all(promises);
     // console.log(JSON.stringify(p1) +"======")
 
-    let ret = await this.getOptions(true);
+    const ret = await this.getOptions(true);
 
     return ret;
   }
@@ -88,14 +91,14 @@ module.exports = class extends Base {
    * @returns {{}}
    */
   async lists() {
-    let map = {}
+    const map = {}
     map.status = 1;
-    let list = await this.where(map).order("sort ASC").field(["name", "value", "type"]).select();
-    let obj = {}
+    const list = await this.where(map).order("sort ASC").field(["name", "value", "type"]).select();
+    const obj = {}
     list.forEach(v => {
       if (v.value.search(/\r\n/ig) > -1 && v.type != 2) {
         v.value = v.value.split("\r\n");
-        let obj = {}
+        const obj = {}
         v.value.forEach(n => {
           n = n.split(":");
           obj[n[0]] = n[1];

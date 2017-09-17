@@ -4,9 +4,6 @@ const jwt = require('jsonwebtoken')
 
 module.exports = class extends BaseRest {
   async postAction() {
-    console.log(JSON.stringify(this.post()))
-    console.log('----- login ....')
-    // if (this.ctx.isPost) {
     const userLogin = this.post('user_login');
     const userModel = this.model('users', {orgId: this.orgId});
     const userInfo = await userModel.where({user_login: userLogin}).find();
