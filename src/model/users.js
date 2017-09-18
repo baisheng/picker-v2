@@ -1,4 +1,4 @@
-/* eslint-disable prefer-promise-reject-errors,no-console */
+/* eslint-disable prefer-promise-reject-errors,no-console,prefer-promise-reject-errors */
 const Base = require('./base');
 const {PasswordHash} = require('phpass');
 
@@ -37,6 +37,9 @@ module.exports = class extends Base {
     return passwordHash.checkPassword(password, userInfo.user_pass);
   }
 
+  // checkUserRole(userInfo) {
+  //
+  // }
   generateKey(userId, appKey, appSecret, status) {
     const data = {appKey, appSecret};
     if (status) {
@@ -52,12 +55,12 @@ module.exports = class extends Base {
    */
   async addUser(data) {
     const createTime = new Date().getTime();
-    const encryptPassword = this.getEncryptPassword(data['user_pass']);
-    let res = await this.where({user_login: data['user_login'], user_phone: data['user_phone'], user_email: data['user_email'], _logic: 'OR'}).thenAdd({
-      user_login: data['user_login'],
-      user_email: data['user_email'],
-      user_phone: data['user_phone'],
-      user_nicename: data['user_nicename'],
+    const encryptPassword = this.getEncryptPassword(data.user_pass);
+    const res = await this.where({user_login: data.user_login, user_phone: data.user_phone, user_email: data.user_email, _logic: 'OR'}).thenAdd({
+      user_login: data.user_login,
+      user_email: data.user_email,
+      user_phone: data.user_phone,
+      user_nicename: data.user_nicename,
       user_pass: encryptPassword,
       user_registered: createTime,
       user_status: 1
@@ -65,7 +68,7 @@ module.exports = class extends Base {
     // Add user meta info
     if (!think.isEmpty(res)) {
       if(res.type === 'add') {
-        let role = think.isEmpty(data['role']) ? 'subscriber' : data['role']
+        const role = think.isEmpty(data.role) ? 'subscriber' : data.role
         await this.model('usermeta').add({
           user_id: res.id,
           meta_key: '_capabilities',
@@ -122,6 +125,7 @@ module.exports = class extends Base {
 
   async displayName(uid) {
     uid = uid || 0;
+// eslint-disable-next-line no-warning-comments
     // TODO 缓存处理后续
     let name = '';
     const info = await this.field('display_name').find(uid);

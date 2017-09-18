@@ -96,7 +96,22 @@ global.oneOf = function (value, validList) {
   }
   return false
 }
+global._formatOneMeta = (item) => {
+  // const _items = [];
 
+  // for (const item of list) {
+    item.meta = {};
+    if (item.metas.length > 0) {
+      for (const meta of item.metas) {
+        // console.log(meta.meta_key + ":" + meta.meta_value);
+        item.meta[meta.meta_key] = meta.meta_value;
+      }
+    }
+    delete item.metas;
+    // _items.push(item);
+  // }
+  return item
+}
 global._formatMeta = (list) => {
   const _items = [];
 

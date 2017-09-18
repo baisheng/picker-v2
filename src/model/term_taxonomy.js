@@ -1,3 +1,4 @@
+/* eslint-disable no-return-await */
 const Base = require('./base');
 
 module.exports = class extends Base {

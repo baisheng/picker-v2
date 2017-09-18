@@ -3,23 +3,17 @@ const BaseRest = require('../common/rest')
 module.exports = class extends BaseRest {
 
   async getAction() {
-    let id = this.get('orgId')
-    if (!think.isEmpty(id)) {
-      try {
-        const data = await this.model('apps').where({[this.modelInstance.pk]: id}).find();
-        for (let meta of data.metas) {
-          if (meta.meta_key === 'basic') {
-            data.basic = JSON.parse(meta.meta_value)
-          }
+    try {
+      const data = await this.model('org').where({[this.modelInstance.pk]: this.orgId}).find();
+      for (let meta of data.metas) {
+        if (meta.meta_key === 'basic') {
+          data.basic = JSON.parse(meta.meta_value)
         }
-        delete data.metas;
-        return this.success(data);
-      } catch (e) {
-        return this.fail()
       }
-    } else {
-      let list = await this.model('org').select()
-      return this.success(list)
+      delete data.metas;
+      return this.success(data);
+    } catch (e) {
+      return this.fail()
     }
   }
 
@@ -47,5 +41,13 @@ module.exports = class extends BaseRest {
     const orgId = 1
     let db = this.service('orginit', {orgId: 1})
     db.create()
+    // const pk = await this.modelInstance.getPk();
+    // const data = this.post();
+    // delete data[pk];
+    // if (think.isEmpty(data)) {
+    //   return this.fail('data is empty');
+    // }
+    // const insertId = await this.modelInstance.add(data);
+    // return this.success({id: insertId});
   }
 }
