@@ -6,6 +6,11 @@ module.exports = class extends think.Model {
         type: think.Model.HAS_MANY,
         model: 'orgmeta',
         fKey: 'org_id'
+      },
+      apps: {
+        type: think.Model.HAS_MANY,
+        model: 'apps',
+        fKey: 'org_id'
       }
     };
   }
@@ -18,6 +23,7 @@ module.exports = class extends think.Model {
   async list () {
     const map = {}
     const list = await this.where(map).field(['id', 'domain', 'subdomain']).select()
+    // console.log(list)
     const obj = {}
     list.forEach(v => {
       let domain = v.domain

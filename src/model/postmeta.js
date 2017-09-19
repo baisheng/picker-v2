@@ -5,14 +5,14 @@ const Base = require('./base');
 module.exports = class extends Base {
   // constructor(...args) {
   //   super(...args);
-  //   this.orgId = ''
-  //   if (this.config['orgId'] !== undefined) {
-  //     this.orgId = this.config['orgId'] + '_'
+  //   this.appId = ''
+  //   if (this.config['appId'] !== undefined) {
+  //     this.appId = this.config['appId'] + '_'
   //   }
   // }
   //
   // get tablePrefix() {
-  //   return 'picker_'+ this.orgId;
+  //   return 'picker_'+ this.appId;
   // }
   async getAttachment (type, post_id) {
     let query = {}
@@ -21,9 +21,9 @@ module.exports = class extends Base {
       switch (type) {
         case 'file':
           query = think.extend({'meta_key': '_attachment_file'}, query)
-          let attachment = await this.where(query).find()
+          const attachment = await this.where(query).find()
           if (!think.isEmpty(attachment)) {
-            return JSON.parse(attachment['meta_value'])
+            return JSON.parse(attachment.meta_value)
           }
           return ''
           break
@@ -31,11 +31,11 @@ module.exports = class extends Base {
           break
       }
     }
-    return
+    
   }
 
   async save (post_id, meta) {
-    for (let key of Object.keys(meta)) {
+    for (const key of Object.keys(meta)) {
       await this.thenUpdate({
         'post_id': post_id,
         'meta_key': key,

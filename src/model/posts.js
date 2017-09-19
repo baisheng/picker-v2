@@ -46,7 +46,7 @@ module.exports = class extends Base {
    * @returns {Promise.<*>}
    */
   async addMeta(post_id, meta_key, meta_value, unique = false) {
-    let _metaModel = this.model('postmeta', {orgId: this.orgId})
+    let _metaModel = this.model('postmeta', {appId: this.appId})
     let _id = await _metaModel.add({
       post_id: post_id,
       meta_key: meta_key,

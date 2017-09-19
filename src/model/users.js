@@ -73,7 +73,7 @@ module.exports = class extends Base {
           user_id: res.id,
           meta_key: '_capabilities',
           meta_value: JSON.stringify({"role": role})
-        }, {orgId: this.orgId})
+        }, {appId: this.appId})
       }
     }
     return res
