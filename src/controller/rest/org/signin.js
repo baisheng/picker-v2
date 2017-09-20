@@ -1,10 +1,10 @@
 /* eslint-disable no-undef */
-const BaseRest = require('../common/rest')
 // import speakeasy from 'speakeasy';
 const jwt = require('jsonwebtoken')
 
-module.exports = class extends BaseRest {
-  async postAction() {
+module.exports = class extends think.Controller {
+
+  async postAction () {
     // console.log(this.post())
     let orgId = this.get('orgId')
     let data = this.post()
@@ -34,7 +34,7 @@ module.exports = class extends BaseRest {
       return this.fail('ACCOUNT_ERROR');
     }
     // 获取签名盐
-    const token = jwt.sign(userInfo, 'shared-secret', { expiresIn: '3d' })
+    const token = jwt.sign(userInfo, 'shared-secret', {expiresIn: '3d'})
     // user: userInfo.user_login,
     return this.success({user: userInfo.user_login, token: token});
     // }
@@ -44,7 +44,7 @@ module.exports = class extends BaseRest {
    * login
    * @return {} []
    */
-  async _loginAction() {
+  async _loginAction () {
     // 二步验证
     // let model = this.model('options');
     // let options = await model.getOptions();
@@ -89,7 +89,7 @@ module.exports = class extends BaseRest {
    * logout
    * @return {}
    */
-  async logoutAction() {
+  async logoutAction () {
     await this.session('userInfo', '');
     return this.redirect('/');
   }
@@ -97,7 +97,7 @@ module.exports = class extends BaseRest {
   /**
    * update user password
    */
-  async passwordAction() {
+  async passwordAction () {
     const userInfo = await this.session('userInfo') || {};
     if (think.isEmpty(userInfo)) {
       return this.fail('USER_NOT_LOGIN');
