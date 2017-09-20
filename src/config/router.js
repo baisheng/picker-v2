@@ -3,7 +3,7 @@ module.exports = [
   [/\/rest\/app\/?(\d+)\/(\w+)(?:\/(\d+))?/, 'rest/app/:2/?appId=:1&id=:3', 'rest'],
   [/\/rest\/org\/?(\d+)\/apps(?:\/(\d+))?/, 'rest/org/apps/?orgId=:1&appId=:2', 'rest'],
   [/\/rest\/org\/(\d+)\/podcast(?:\/(\d+))?/, 'rest/org/posts?orgId=:1&id=:2&type=podcast', 'rest'],
-  [/\/rest\/org\/(\d+)\/signin?/, 'rest/org/signin/?orgId=:1&id=:3', 'rest'],
+  [/\/rest\/org\/(\d+)\/signin?/, 'rest/org/signin/?orgId=:1', 'rest'],
   [/\/rest\/org\/?(\d+)\/(\w+)(?:\/(\d+))?/, 'rest/org/:2/?orgId=:1&id=:3', 'rest'],
   // [/\/rest\/org(?:\/(\d+))?/, 'rest/org/?orgId=:1', 'rest'],
   // [/\/rest\/org\/(\d+)\/podcast(?:\/(\d+))?/, 'rest/orgs/posts?orgId=:1&id=:2&type=podcast', 'rest'],
