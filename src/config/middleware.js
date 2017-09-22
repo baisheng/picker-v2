@@ -3,8 +3,46 @@ const path = require('path');
 const isDev = think.env === 'development';
 const jwt = require('koa-jwt');
 const cors = require('kcors');
+// const koaConnect = require('koa-connect')
+// const {Nuxt, Builder} = require('nuxt')
+// const chalk = require('chalk')
+// const config = require('../nuxt.config')
 
 module.exports = [
+  // nuxt ssr
+  /*
+  {
+    handle: (option, app) => {
+      return (ctx, next) => {
+        config.dev = !(process.env.NODE_ENV === 'production')
+
+        const nuxt = new Nuxt(config)
+
+        // nuxt.showOpen = () => {
+        // const _host = host
+        // const _host = host === '0.0.0.0' ? 'localhost' : host
+        // eslint-disable-next-line no-console
+        // console.log('\n' + chalk.bgGreen.black(' OPEN ') + chalk.green(` http://${_host}:${port}\n`))
+        // }
+
+        // Build only in dev mode
+        if (config.dev) {
+          const devConfigs = config.development
+          new Builder(nuxt).build()
+        }
+        const nuxtRender = koaConnect(nuxt.render)
+        app.use(async (ctx, next) => {
+          await next()
+          // if (ctx.state.subapp !== consts.API) {
+          ctx.status = 200 // koa defaults to 404 when it sees that status is unset
+          ctx.req.session = ctx.session
+          await nuxtRender(ctx)
+          // }
+        })
+      }
+    }
+  },
+  */
   {
     handle: 'meta',
     options: {
@@ -68,11 +106,11 @@ module.exports = [
     //   path: [/^\/login,/^\/register]
     // },
     match: ctx => { // match 为一个函数，将 ctx 传递给这个函数，如果返回结果为 true，则启用该 middleware
-      if (ctx.url.match(/^\/rest\/org\/(\d+)\/signin?/) || ctx.url.match(/^\/api\/signin/) || ctx.url.match(/^\/api\/register/)) {
-        return false;
-      } else if (ctx.url.match(/^\/rest\/org\/(\d+)\/?/) || ctx.url.match(/^\/rest\/app\/(\d+)\/?/)) {
-        return true;
-      }
+      // if (ctx.url.match(/^\/rest\/org\/(\d+)\/signin?/) || ctx.url.match(/^\/api\/signin/) || ctx.url.match(/^\/api\/register/)) {
+      //   return false;
+      // } else if (ctx.url.match(/^\/rest\/org\/(\d+)\/?/) || ctx.url.match(/^\/rest\/app\/(\d+)\/?/)) {
+      //   return true;
+      // }
     }
   },
   'logic',

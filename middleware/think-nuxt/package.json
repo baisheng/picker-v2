@@ -1,0 +1,55 @@
+{
+  "name": "think-nuxt",
+  "description": "Nuxtjs middleware for thinkjs 3.0",
+  "version": "1.1.0",
+  "author": {
+    "name": "Basil",
+    "email": "baisheng@gmail.com",
+    "url": "https://github.com/baisheng"
+  },
+  "contributors": [
+    {
+      "name": "baisheng",
+      "email": "baisheng@gmail.com",
+      "url": "https://github.com/baisheng"
+    }
+  ],
+  "keywords": [
+    "web",
+    "middleware",
+    "nuxt",
+    "nuxtjs",
+    "thinkjs"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/baisheng/think-nuxt"
+  },
+  "dependencies": {
+    "http-connect": "^0.1.4",
+    "koa-connect": "^2.0.0",
+    "nuxt": "^1.0.0-rc11",
+    "think-helper": "^1.0.22"
+  },
+  "devDependencies": {
+    "ava": "^0.21.0",
+    "coveralls": "^2.13.1",
+    "koa": "^2.3.0",
+    "koa-body": "^2.3.0",
+    "nyc": "^11.1.0",
+    "supertest": "^3.0.0",
+    "think-logger3": "^1.0.7"
+  },
+  "license": "MIT",
+  "files": [
+    "LICENSE",
+    "Readme.md",
+    "index.js"
+  ],
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "scripts": {
+    "test": "nyc ava --serial"
+  }
+}

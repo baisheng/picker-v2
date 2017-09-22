@@ -1,0 +1,10 @@
+<template>
+  <a
+    rel=""
+    href=""
+    target="_blank"
+    class="sidebar__button"
+  >
+    Add
+  </a>
+</template>

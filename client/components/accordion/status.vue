@@ -1,0 +1,20 @@
+<template>
+  <a href="/sharing/bluepx.wordpress.com" class="accordion__status is-warning">
+    <svg height="24" width="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+         class="gridicon gridicons-notice">
+      <g>
+        <path
+          d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm1 15h-2v-2h2v2zm0-4h-2l-.5-6h3l-.5 6z"></path>
+      </g>
+    </svg>
+  </a>
+</template>
+
+<script>
+  export default {
+    props: {
+      url: String,
+      icon: String,
+    }
+  }
+</script>

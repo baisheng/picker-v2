@@ -1,0 +1,126 @@
+.post-item {
+  // The padding here ensures that margins of child elements are included
+  // within the height of this element, and the margin cancels the padding.
+  // See https://stackoverflow.com/a/28121477
+  padding: 1px 0;
+  margin: -1px 0;
+
+  &.is-expanded {
+    margin: 11px 0;
+  }
+}
+
+.card.post-item__card /* for specificity */ {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.post-item__detail {
+  position: relative;
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+  margin-right: auto;
+
+  &::after {
+    @include long-content-fade( $size: 40px );
+    right: 0;
+  }
+}
+
+.post-item__title-meta {
+  padding: 6px 0;
+
+  &.site-is-visible {
+    padding: 0;
+  }
+}
+
+.post-item__site {
+  display: flex;
+}
+
+.post-item__site .site-icon {
+  margin-right: 6px;
+}
+
+.post-item__site-title {
+  display: inline;
+  margin: 0;
+  line-height: 16px;
+  vertical-align: middle;
+  font-size: 13px;
+  color: $gray-dark;
+}
+
+.post-item__title {
+  @extend %content-font;
+  margin-bottom: 2px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+a.post-item__title-link {
+  color: $gray-dark;
+
+  &:hover {
+    color: darken( $gray, 20% );
+  }
+
+  .post-item__card.is-untitled & {
+    color: $gray;
+    font-style: italic;
+  }
+
+  .post-item__card.is-placeholder & {
+    @include placeholder;
+  }
+}
+
+.post-item__meta {
+  font-size: 12px;
+  color: $gray-text-min;
+}
+
+.post-item__meta .post-relative-time,
+.post-item__meta .post-status,
+.post-item__meta .post-type-post-author {
+  float: left;
+  margin-right: 12px;
+}
+
+.post-item__meta .post-relative-time,
+.post-item__meta .post-status {
+  margin-bottom: 0;
+}
+
+.post-item__meta .post-relative-time__icon,
+.post-item__meta .post-status__icon {
+  width: 14px;
+  height: 14px;
+  margin-top: -1px;
+  margin-right: 6px;
+}
+
+.post-item__card.is-mini.is-compact {
+  padding: 8px 16px;
+
+  .post-item__meta {
+    display: none;
+  }
+
+  .post-item__title {
+    display: inline;
+    font-size: 13px;
+    margin: 0;
+  }
+
+  .post-item__site-title {
+    font-size: 11px;
+  }
+
+  .post-actions-ellipsis-menu {
+    margin: 0;
+  }
+}

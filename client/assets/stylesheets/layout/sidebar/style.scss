@@ -1,0 +1,453 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  padding: 0;
+  background: $sidebar-bg-color;
+  position: fixed;
+  top: 47px;
+  bottom: 0;
+  left: 0;
+
+  @include breakpoint("<960px") {
+    border-right: 1px solid darken($sidebar-bg-color, 5%);
+    width: $sidebar-width-min;
+  }
+
+  @include breakpoint(">960px") {
+    border-right: 1px solid darken($sidebar-bg-color, 5%);
+    width: $sidebar-width-max;
+  }
+
+  @include breakpoint("<660px") {
+    left: -100%;
+    width: 100%;
+    max-height: calc(100% - 47px);
+    pointer-events: none;
+    transform: translateX(0);
+    transition: all 0.15s cubic-bezier(0.770, 0.000, 0.175, 1.000);
+
+    .focus-sidebar & {
+      pointer-events: auto;
+      -webkit-overflow-scrolling: touch;
+      transform: translateX(100%);
+    }
+
+    .focus-sites & {
+      transform: translateX(100%);
+    }
+  }
+
+  @include breakpoint(">660px") {
+    &.has-regions {
+      overflow: hidden;
+    }
+  }
+}
+
+// Clearing out the sidebar list styles
+.sidebar {
+  margin: 0;
+
+  .current-site,
+  .sidebar__footer {
+    flex-shrink: 0; // prevents items from squishing together under their initial height in Safari
+  }
+
+  ul {
+    flex-shrink: 0;
+    list-style: none;
+    margin: 0;
+  }
+
+  li {
+    flex-shrink: 0;
+    position: relative;
+  }
+}
+
+// Sidebar group headings
+.sidebar__heading {
+  //color: darken($gray, 10%);
+  color: $dark80;
+  font-weight: 600;
+  font-size: 12px;
+  margin: 16px 8px 6px 14px;
+  display: flex;
+}
+
+// Menu Links
+.sidebar__menu {
+  display: block;
+
+  @include breakpoint("<660px") {
+    margin-top: 24px;
+  }
+
+  li {
+    display: flex;
+
+    @include breakpoint("<660px") {
+      background-color: $gray-light;
+      border-bottom: 1px solid rgba(lighten($gray, 20%), 0.5);
+
+      &:first-child {
+        border-top: 1px solid lighten($gray, 20%);
+      }
+
+      &:last-child {
+        border-bottom: 1px solid lighten($gray, 20%);
+      }
+    }
+  }
+
+  a:first-child {
+    flex: 1 0 auto;
+    width: 0;
+
+    // Fade overlay for longer labels
+    &:after {
+      content: '';
+      text-align: right;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 15%;
+      background: linear-gradient(
+          to right,
+          rgba($sidebar-bg-color, 0),
+          rgba($sidebar-bg-color, 1) 50%);
+
+      @include breakpoint("<660px") {
+        background: linear-gradient(
+            to right,
+            rgba($gray-light, 0),
+            rgba($gray-light, 1) 50%);
+      }
+    }
+  }
+
+  a {
+    font-size: 14px;
+    line-height: 1;
+    position: relative;
+    padding: 11px 16px 11px 18px;
+    color: $sidebar-text-color;
+    box-sizing: border-box;
+    white-space: nowrap;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+
+    &:focus {
+      outline: none;
+    }
+
+    -webkit-tap-highlight-color: rgba($gray-dark, .2);
+
+  }
+
+  a.plan-name {
+    padding: 3px 8px 4px 8px;
+    margin-right: 8px;
+    align-self: center;
+    color: darken($gray, 20%);
+    font-weight: 600;
+    font-size: 12px;
+  }
+
+  .gridicon,
+  .jetpack-logo {
+    fill: $gray;
+    height: 24px;
+    width: 24px;
+    margin-right: 6px;
+    flex-shrink: 0;
+
+    @include breakpoint("<660px") {
+      top: 15px;
+      left: 16px;
+      height: 24px;
+      width: 24px;
+    }
+
+    // External indicator for sections that aren't available in Calypso
+    &.gridicons-external {
+      position: absolute;
+      top: 13px;
+      right: 8px;
+      left: auto;
+      z-index: z-index('icon-parent', '.sidebar__menu .gridicon.gridicons-external');
+      height: 18px;
+      margin-right: 0;
+
+    }
+  }
+}
+
+a.sidebar__button, form.sidebar__button {
+  display: flex;
+  position: relative;
+  align-self: center;
+  box-sizing: border-box;
+  white-space: nowrap;
+  overflow: hidden;
+  padding: 2px 8px 3px 8px;
+  height: 24px;
+  margin-right: 8px;
+  line-height: 18px;
+  background-color: $gray-light;
+  color: darken($gray, 20%);
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 3px;
+  border: 1px solid darken($sidebar-bg-color, 10%);
+
+  @include breakpoint("<660px") {
+    font-size: 14px;
+    height: 30px;
+    line-height: 23px;
+  }
+}
+
+form.sidebar__button {
+  cursor: pointer;
+}
+
+// Selected Menu
+@include breakpoint(">660px") {
+  .sidebar__menu .selected {
+    background-color: $sidebar-selected-color;
+
+    a {
+      color: $white;
+
+      &:first-child:after {
+        background: linear-gradient(
+            to right,
+            rgba($sidebar-selected-color, 0),
+            rgba($sidebar-selected-color, 1) 50%);
+      }
+    }
+
+    .sidebar__button {
+      color: $gray-dark;
+      border: 1px solid darken($sidebar-selected-color, 10%);
+    }
+
+    .gridicon,
+    .jetpack-logo {
+      fill: $white;
+    }
+
+    &.is-action-button-selected a {
+      &:first-child:after {
+        background: linear-gradient(
+            to right,
+            rgba($gray-light, 0),
+            rgba($gray-light, 1) 50%);
+      }
+    }
+  }
+}
+
+// Menu Hover
+.notouch .sidebar__menu li:hover {
+  &:not(.selected) {
+    background-color: lighten($sidebar-bg-color, 3%);
+
+    a,
+    form {
+      color: $blue-medium;
+
+      &:first-child:after {
+        background: linear-gradient(
+            to right,
+            rgba(lighten($sidebar-bg-color, 3%), 0),
+            rgba(lighten($sidebar-bg-color, 3%), 1) 50%);
+      }
+
+      &.sidebar__button {
+        background-color: lighten($sidebar-bg-color, 10%);
+        color: $sidebar-text-color;
+      }
+    }
+
+    .gridicon,
+    .jetpack-logo {
+      fill: $blue-medium;
+    }
+  }
+
+  @include breakpoint("<660px") {
+    background-color: $gray-light;
+
+    a,
+    form {
+      color: $blue-medium;
+
+      &:first-child:after {
+        background: linear-gradient(
+            to right,
+            rgba($gray-light, 0),
+            rgba($gray-light, 1) 50%);
+      }
+
+      &.sidebar__button {
+        background-color: $white;
+        color: $gray-dark;
+      }
+    }
+
+    .gridicon {
+      fill: $blue-medium;
+    }
+  }
+}
+
+.notouch .sidebar__menu li:not(.selected) {
+  a,
+  form {
+    &.sidebar__button:hover {
+      color: $blue-medium;
+    }
+  }
+
+  form.sidebar__button:hover {
+    border-color: darken($sidebar-bg-color, 10%);
+  }
+}
+
+.sidebar .sidebar__separator {
+  border-bottom: 1px solid darken($sidebar-bg-color, 10%);
+}
+
+.sidebar .sidebar__footer {
+  align-items: center;
+  padding: 0;
+  border-top: 1px solid darken($sidebar-bg-color, 10%);
+  margin: auto 0 0;
+  display: flex;
+  flex-direction: row;
+  padding-left: 10px;
+
+  @include breakpoint("<660px") {
+    margin-top: 16px;
+  }
+
+}
+
+.sidebar .sidebar__footer .button {
+  box-sizing: border-box;
+  display: inline-block;
+  text-transform: uppercase;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 8px;
+  color: darken($gray, 10%);
+  line-height: 2.1;
+  margin-right: auto;
+
+  &.sidebar__footer-help,
+  &.sidebar__footer-chat {
+    border-left: 1px solid darken($sidebar-bg-color, 10%);
+    flex: 0 1 40px;
+    margin-right: 0;
+    margin-left: 0;
+    outline: 0;
+
+    @include breakpoint("<660px") {
+      flex: 0 1 56px;
+    }
+
+  }
+
+  &.sidebar__footer-help {
+    margin-left: auto;
+  }
+
+  &.sidebar__footer-chat.has-unread {
+    color: $gray-dark;
+    position: relative;
+
+    &:after {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 6px;
+      left: 3px;
+      width: 10px;
+      height: 10px;
+      border: 2px solid lighten($gray, 30%);
+      border-radius: 50%;
+      background: $orange-jazzy;
+
+      @include breakpoint("<660px") {
+        top: 14px;
+        left: 11px;
+      }
+
+    }
+
+  }
+
+  &:hover {
+    color: $gray-dark;
+  }
+
+  @include breakpoint("<660px") {
+    padding: 16px;
+  }
+
+  .gridicon {
+    display: block;
+    float: left;
+    margin-right: 6px;
+    top: auto;
+    margin-top: auto;
+  }
+
+}
+
+.layout.is-section-help .sidebar .sidebar__footer-help {
+  background-color: $sidebar-selected-color;
+  color: $white;
+}
+
+.sidebar__region {
+  flex-shrink: 0;
+  @include breakpoint(">660px") {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
+    flex: 1;
+    transform: translateX(0); /* workaround for safari scrollbar rendering bug */
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+.sidebar__menu {
+  .is-placeholder {
+    cursor: default;
+    pointer-events: none;
+
+    .gridicon, span, .sidebar__button {
+      animation: loading-fade 1.6s ease-in-out infinite;
+      background-color: lighten($gray, 25%);
+      color: transparent;
+    }
+
+    .gridicon {
+      fill: transparent;
+      stroke: transparent;
+    }
+
+    a {
+      &:after {
+        display: none;
+      }
+    }
+  }
+}

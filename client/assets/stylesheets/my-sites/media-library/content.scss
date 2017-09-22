@@ -1,0 +1,31 @@
+.media-library__content {
+	position: relative;
+}
+
+.media-library__scale-range.range {
+	position: absolute;
+	top: 16px;
+	right: 24px;
+	width: 12%;
+	margin: 0 28px;
+
+	@include breakpoint( "<480px" ) {
+		width: 20%;
+	}
+}
+
+.media-library__scale-range .range__content.is-min {
+	left: -28px;
+	padding-left: 8px;
+}
+
+.media-library__scale-range .range__content.is-max {
+	right: -28px;
+}
+
+.media-library__connect-message {
+	max-width: 520px;
+	padding: 36px;
+	margin: 0 auto;
+	text-align: center;
+}
