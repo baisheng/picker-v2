@@ -1,10 +1,10 @@
-/* eslint-disable prefer-promise-reject-errors,no-console,prefer-promise-reject-errors */
+/* eslint-disable prefer-promise-reject-errors,no-console,prefer-promise-reject-errors,prefer-promise-reject-errors */
 const Base = require('./base');
 const {PasswordHash} = require('phpass');
 
 module.exports = class extends Base {
 
-  get relation() {
+  get relation () {
     return {
       metas: {
         type: think.Model.HAS_MANY,
@@ -21,18 +21,19 @@ module.exports = class extends Base {
    * @param  {String} salt     []
    * @return {String}          []
    */
-  getEncryptPassword(password) {
+  getEncryptPassword (password) {
     const passwordHash = new PasswordHash();
     const hash = passwordHash.hashPassword(password);
     return hash;
   }
+
   /**
    * check password
    * @param  {[type]} userInfo [description]
    * @param  {[type]} password [description]
    * @return {[type]}          [description]
    */
-  checkPassword(userInfo, password) {
+  checkPassword (userInfo, password) {
     const passwordHash = new PasswordHash();
     return passwordHash.checkPassword(password, userInfo.user_pass);
   }
@@ -40,7 +41,7 @@ module.exports = class extends Base {
   // checkUserRole(userInfo) {
   //
   // }
-  generateKey(userId, appKey, appSecret, status) {
+  generateKey (userId, appKey, appSecret, status) {
     const data = {appKey, appSecret};
     if (status) {
       data.status = status;
@@ -49,14 +50,57 @@ module.exports = class extends Base {
   }
 
   /**
+   * 添加从微信过来的用户
+   *
+   * @param data
+   * @returns {Promise.<*>}
+   */
+  async addWxAppUser (data) {
+    const createTime = new Date().getTime();
+    const res = await this.where({
+      user_login: data.user_login
+    }).thenAdd({
+      user_login: data.user_login,
+      user_nicename: data.user_nicename,
+      user_registered: createTime,
+      user_status: 1
+    });
+    // Add user meta info
+    if (!think.isEmpty(res)) {
+      if (res.type === 'add') {
+        const role = think.isEmpty(data.role) ? 'subscriber' : data.role
+        const usermeta = this.model('usermeta')
+        await usermeta.add({
+          user_id: res.id,
+          meta_key: '_capabilities',
+          meta_value: JSON.stringify({"role": role})
+        }, {appId: this.appId})
+
+        if (!think.isEmpty(data.wxapp)) {
+          await usermeta.add({
+            user_id: res.id,
+            meta_key: `picker_${data.appid}_wxapp`,
+            meta_value: JSON.stringify(data.wxapp)
+          })
+        }
+      }
+    }
+    return res
+  }
+  /**
    * 添加用户
    * @param {[type]} data [description]
    * @param {[type]} ip   [description]
    */
-  async addUser(data) {
+  async addUser (data) {
     const createTime = new Date().getTime();
     const encryptPassword = this.getEncryptPassword(data.user_pass);
-    const res = await this.where({user_login: data.user_login, user_phone: data.user_phone, user_email: data.user_email, _logic: 'OR'}).thenAdd({
+    const res = await this.where({
+      user_login: data.user_login,
+      user_phone: data.user_phone,
+      user_email: data.user_email,
+      _logic: 'OR'
+    }).thenAdd({
       user_login: data.user_login,
       user_email: data.user_email,
       user_phone: data.user_phone,
@@ -67,9 +111,10 @@ module.exports = class extends Base {
     });
     // Add user meta info
     if (!think.isEmpty(res)) {
-      if(res.type === 'add') {
+      if (res.type === 'add') {
         const role = think.isEmpty(data.role) ? 'subscriber' : data.role
-        await this.model('usermeta').add({
+        const usermeta = this.model('usermeta')
+        await usermeta.add({
           user_id: res.id,
           meta_key: '_capabilities',
           meta_value: JSON.stringify({"role": role})
@@ -84,7 +129,7 @@ module.exports = class extends Base {
    * @param  {[type]} data [description]
    * @return {[type]}      [description]
    */
-  async saveUser(data, ip) {
+  async saveUser (data, ip) {
     const info = await this.where({id: data.id}).find();
     if (think.isEmpty(info)) {
       return Promise.reject(new Error('UESR_NOT_EXIST'));
@@ -123,7 +168,7 @@ module.exports = class extends Base {
    * @return string       用户昵称
    */
 
-  async displayName(uid) {
+  async displayName (uid) {
     uid = uid || 0;
 // eslint-disable-next-line no-warning-comments
     // TODO 缓存处理后续

@@ -12,6 +12,7 @@
     "axios": "^0.16.2",
     "chalk": "^2.1.0",
     "cheerio": "^1.0.0-rc.2",
+    "crypto": "^1.0.1",
     "html-metadata": "^1.6.3",
     "ioredis": "^3.1.4",
     "jsmediatags": "^3.7.0",

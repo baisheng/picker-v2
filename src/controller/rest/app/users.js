@@ -1,18 +1,27 @@
 /* eslint-disable default-case */
-const BaseRest = require('../common/rest')
+const BaseRest = require('./common/rest')
 module.exports = class extends BaseRest {
   async postAction () {
-    const approach = this.get('approach')
     let data = this.post()
+    console.log(data)
+    const approach = this.post('approach')
     switch(approach) {
       case 'wxapp': {
         // const pickerAppId = data.appid
-        let userMetaModel = this.mode('usermeta')
-        let wxUser = await userMetaModel.where({meta_key: `picker_${data.appid}_wxapp`, meta_value: data.openid}).select()
+        let userMetaModel = this.model('usermeta')
+        let wxUser = await this.model('users').where({user_login: data.openId}).find()
+
         if (!think.isEmpty(wxUser)) {
           return this.fail('微信用户已注册')
+        } else {
+          const userId = await this.model('users').addWxAppUser({
+            appid: this.appId,
+            user_login: data.openId,
+            user_nicename: data.nickName,
+            wxapp: data
+          })
+          return this.success('注册成功!')
         }
-        break
       }
       default:
         break
@@ -24,7 +33,9 @@ module.exports = class extends BaseRest {
   }
 
   async getAction () {
-    this.success('lala')
+    let appid = this.get('appId')
+
+    this.success(appid)
     // const approach = this.get('openid')
     // let user = await this.modelInstance.
   }

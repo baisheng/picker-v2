@@ -4,6 +4,6 @@
 const lodash = require("lodash");
 const path = require('path');
 module.exports = {
-    _:lodash,
-    resource:path.join(think.ROOT_PATH, 'www')
+  _: lodash,
+  resource: path.join(think.ROOT_PATH, 'www')
 }

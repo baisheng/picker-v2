@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-const BaseRest = require('../common/rest')
+const BaseRest = require('./common/rest')
 // import speakeasy from 'speakeasy';
 const jwt = require('jsonwebtoken')
 

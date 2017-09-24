@@ -743,6 +743,10 @@ cryptiles@2.x.x:
   dependencies:
     boom "2.x.x"
 
+crypto@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/crypto/-/crypto-1.0.1.tgz#2af1b7cad8175d24c8a1b0778255794a21803037"
+
 css-select@~1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/css-select/-/css-select-1.2.0.tgz#2b3a110539c5355f1cd8d314623e870b121ec858"
@@ -1129,8 +1133,8 @@ eslint-scope@^3.7.1:
     estraverse "^4.1.1"
 
 eslint@^4.2.0:
-  version "4.7.0"
-  resolved "https://registry.yarnpkg.com/eslint/-/eslint-4.7.0.tgz#d35fc07c472520be3de85b3da11e99c576afd515"
+  version "4.7.2"
+  resolved "https://registry.yarnpkg.com/eslint/-/eslint-4.7.2.tgz#ff6f5f5193848a27ee9b627be3e73fb9cb5e662e"
   dependencies:
     ajv "^5.2.0"
     babel-code-frame "^6.22.0"
@@ -3068,8 +3072,8 @@ setprototypeof@1.0.3:
   resolved "https://registry.yarnpkg.com/setprototypeof/-/setprototypeof-1.0.3.tgz#66567e37043eeb4f04d91bd658c0cbefb55b8e04"
 
 sharp@^0.18.2:
-  version "0.18.3"
-  resolved "https://registry.yarnpkg.com/sharp/-/sharp-0.18.3.tgz#1cedcb9b8a02fef8a22cbe38e0227c221e686a8a"
+  version "0.18.4"
+  resolved "https://registry.yarnpkg.com/sharp/-/sharp-0.18.4.tgz#fe329c0f06896c28aa24376df1fff02ae57f2d34"
   dependencies:
     caw "^2.0.0"
     color "^2.0.0"
@@ -3636,8 +3640,8 @@ think-wechat@^1.1.0:
     wechat "^2.1.0"
 
 thinkjs@^3.0.0:
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/thinkjs/-/thinkjs-3.1.2.tgz#2d1a6fe67e6db54eeb3fa5182808c64a61c22a71"
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/thinkjs/-/thinkjs-3.2.1.tgz#6efeee4089bc53b687ce941b4d2cf68b8244e86c"
   dependencies:
     bluebird "3.3.5"
     cookies "^0.7.0"

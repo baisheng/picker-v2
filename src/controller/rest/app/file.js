@@ -19,14 +19,14 @@ module.exports = class extends BaseRest {
     }
     // 获取 文件信息
     const file = think.extend({}, this.file('file'))
-    console.log(file)
+    // console.log(file)
     const filePath = file.path
     const extname = path.extname(file.name)
     const basename = path.basename(filePath) + extname;
     // let type = file.type
     // console.log(file.type)
 
-    console.log(file.name + ":" + extname)
+    // console.log(file.name + ":" + extname)
 
     // if (oneOf(file.type, ['audio/mpeg', 'audio/mp3'])) {
     //   return this.success(file.originalFilename)
