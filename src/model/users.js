@@ -50,6 +50,16 @@ module.exports = class extends Base {
   }
 
   /**
+   * 查询微信注册来的用户
+   * @param openId
+   * @returns {Promise.<*>}
+   */
+  async getByWxApp (openId) {
+    let user = await this.where({user_login: openId}).find()
+    return user
+  }
+
+  /**
    * 添加从微信过来的用户
    *
    * @param data
@@ -87,6 +97,7 @@ module.exports = class extends Base {
     }
     return res
   }
+
   /**
    * 添加用户
    * @param {[type]} data [description]
