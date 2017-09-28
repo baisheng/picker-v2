@@ -1,0 +1,14 @@
+// Request URL:http://api.qingmang.me/v1/account.info?token=NWRiMWFkNGUtYTM1ZS0xMWU3LTlmMzMtMDAxNjNlMzI2OTg3
+{
+  "ok": true,
+  "user": {
+    "username": "13488689885",
+    "openid": null,
+    "uid": 2242533,
+    "phone": "13488689885",
+    "avatar": null,
+    "desc": null,
+    "type": 1,
+    "name": null
+  }
+}

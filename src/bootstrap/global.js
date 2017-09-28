@@ -120,7 +120,10 @@ global._formatMeta = (list) => {
     if (item.metas.length > 0) {
       for (const meta of item.metas) {
         // console.log(meta.meta_key + ":" + meta.meta_value);
-        item.meta[meta.meta_key] = JSON.parse(meta.meta_value);
+        if (meta.meta_key.includes('_capabilities') && meta.meta_key.includes('picker_')) {
+          Object.assign(item, JSON.parse(meta.meta_value))
+        }
+        item.meta[meta.meta_key] = JSON.parse(meta.meta_value)
       }
     }
     delete item.metas;

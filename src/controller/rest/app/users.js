@@ -1,27 +1,23 @@
-/* eslint-disable default-case */
+/* eslint-disable default-case,no-undef */
 const BaseRest = require('./common/rest')
 const jwt = require('jsonwebtoken')
 
 module.exports = class extends BaseRest {
   async postAction () {
     const data = this.post()
-    console.log(data)
+    // console.log(data)
     const approach = this.post('approach')
+    const userMetaModel = this.model('usermeta')
+    // 注册用户来源
     switch(approach) {
+      // 微信小程序
       case 'wxapp': {
-        // const pickerAppId = data.appid
-        const userMetaModel = this.model('usermeta')
+        // 判断用户是否已注册
         const wxUser = await this.model('users').getByWxApp(data.openId)
-        // let wxUser = await this.model('users').where({user_login: data.openId}).find()
-
         if (!think.isEmpty(wxUser)) {
-          // const token = await this.createToken(approach, data)
-          // return this.success({token: token});
-          // return this.fail('微信用户已注册')
+          // 获取 token
           const token = await this.createToken(approach, data)
-          // return this.json({user: data.openId, token: token})
           return this.success({userId: wxUser.id, token: token, token_type: 'Bearer'})
-          // return this.success()
         } else {
           const userInfo = {
             appid: this.appId,
@@ -33,6 +29,11 @@ module.exports = class extends BaseRest {
           const token = await this.createToken(approach, data)
           return this.success({userId: userId, token: token, token_type: 'Bearer'})
         }
+      }
+      case 'pc': {
+        data.appid = this.appId
+        const userId = await this.model('users').addUser(data)
+        return this.success(userId)
       }
     }
   }
@@ -48,7 +49,6 @@ module.exports = class extends BaseRest {
    * @returns {Promise.<*>}
    */
   async createToken(approach, data) {
-    console.log(approach + '----')
     switch (approach) {
       case 'password': {
         break
@@ -64,12 +64,15 @@ module.exports = class extends BaseRest {
   }
   async getAction () {
     const appid = this.get('appId')
+    const userMeta = this.model('usermeta')
+    const userIds = await userMeta.where({'meta_key': `picker_${appid}_capabilities`}).select()
+    let ids = []
+    userIds.forEach((item) => {
+      ids.push(item.user_id)
+    })
+    const users = await this.model('users').where({id: ['IN', ids]}).page(this.get('page'), 10).countSelect()
+    _formatMeta(users.data)
 
-    this.success(appid)
-    // const approach = this.get('openid')
-    // let user = await this.modelInstance.
+    this.success(users)
   }
-  // async getByWxApp(openid) {
-  //   let user = await this.modelInstance.
-  // }
 }

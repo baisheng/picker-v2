@@ -1,4 +1,4 @@
-/* eslint-disable no-undef */
+/* eslint-disable no-undef,no-return-await,default-case */
 const BaseRest = require('./common/rest')
 module.exports = class extends BaseRest {
   /**
@@ -45,7 +45,6 @@ module.exports = class extends BaseRest {
             query = {status: ['!=', 'delete'], type: type}
             return await this.getPodcastList(query, fields)
           }
-          break;
         case "article":
           break;
         case "resume":
@@ -87,13 +86,18 @@ module.exports = class extends BaseRest {
         // 音频播放地址
         item.url = await metaModel.getAttachment('file', item.meta._audio_id)
       }
+      const userModel = this.model('users');
       // 如果有作者信息
       if (!Object.is(item.meta._author_id, undefined)) {
+        const authorInfo = await userModel.where({id: item.meta._author_id}).find()
         // item.author =
+        item.authorInfo = authorInfo
         // 查询 出对应的作者信息
+      } else {
+        item.authorInfo = await userModel.where({id: item.author}).find()
       }
-      const user = this.ctx.state.user
-      item.author = user
+      // const user = this.ctx.state.user
+      // item.author = user
       // 音频播放的歌词信息
       // lrc
 
@@ -133,13 +137,17 @@ module.exports = class extends BaseRest {
         // 音频播放地址
         item.url = await metaModel.getAttachment('file', item.meta._audio_id)
       }
+      const userModel = this.model('users');
+
       // 如果有作者信息
       if (!Object.is(item.meta._author_id, undefined)) {
+        const author = await userModel.where({id: item.meta._author_id}).find()
         // item.author =
+        item.authorInfo = author
         // 查询 出对应的作者信息
+      } else {
+        item.authorInfo = await userModel.where({id: item.author}).find()
       }
-      const user = this.ctx.state.user
-      item.author = user
       // 音频播放的歌词信息
       // lrc
 
@@ -181,16 +189,18 @@ module.exports = class extends BaseRest {
   async postAction () {
     // console.log(this.ctx.state.user)
     // let type = this.get('type')
-    console.log(this.ctx.state.user)
+    // console.log(this.ctx.state.user)
     const data = this.post()
-    console.log(JSON.stringify(data))
+    // console.log(JSON.stringify(data))
     if (think.isEmpty(data.type)) {
       data.type = 'podcast'
     }
     const currentTime = new Date().getTime();
     data.date = currentTime
     data.modified = currentTime
-    data.author = this.ctx.state.user.id
+    if (think.isEmpty(data.author)) {
+      data.author = this.ctx.state.user.id
+    }
     if (think.isEmpty(data.status)) {
       data.status = 'auto-draft';
     }
@@ -210,6 +220,8 @@ module.exports = class extends BaseRest {
     const pk = this.modelInstance.pk;
     // const pk = await this.modelInstance.getPk();
     const data = this.post();
+    // Relation.deleteProperty(data, 'pk')
+// eslint-disable-next-line prefer-reflect
     delete data[pk];
     if (think.isEmpty(data)) {
       return this.fail('data is empty');

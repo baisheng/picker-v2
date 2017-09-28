@@ -2,8 +2,9 @@
 const BaseRest = require('../common/rest')
 // import speakeasy from 'speakeasy';
 const jwt = require('jsonwebtoken')
-
+// const WechatThird = require('wechat-')
 module.exports = class extends BaseRest {
+
   async postAction () {
     console.log(this.post())
     let orgId = this.get('orgId')

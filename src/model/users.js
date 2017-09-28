@@ -82,7 +82,7 @@ module.exports = class extends Base {
         const usermeta = this.model('usermeta')
         await usermeta.add({
           user_id: res.id,
-          meta_key: '_capabilities',
+          meta_key: data.appid ? `picker_${data.appid}_capabilities` : '_capabilities',
           meta_value: JSON.stringify({"role": role})
         }, {appId: this.appId})
 
@@ -108,7 +108,7 @@ module.exports = class extends Base {
     const encryptPassword = this.getEncryptPassword(data.user_pass);
     const res = await this.where({
       user_login: data.user_login,
-      user_phone: data.user_phone,
+      // user_phone: data.user_phone,
       user_email: data.user_email,
       _logic: 'OR'
     }).thenAdd({
@@ -127,9 +127,17 @@ module.exports = class extends Base {
         const usermeta = this.model('usermeta')
         await usermeta.add({
           user_id: res.id,
-          meta_key: '_capabilities',
+          meta_key: data.appid ? `picker_${data.appid}_capabilities` : '_capabilities',
           meta_value: JSON.stringify({"role": role})
         }, {appId: this.appId})
+        // 后续这里的用户简介可以处理与 resume 模型关联
+        if (!think.isEmpty(data.summary)) {
+          await usermeta.add({
+            user_id: res.id,
+            meta_key: 'resume',
+            meta_value: JSON.stringify({"summary": data.summary})
+          })
+        }
       }
     }
     return res

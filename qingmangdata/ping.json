@@ -1,0 +1,105 @@
+{
+  "app": {
+    "name": "轻芒",
+    "audio_enabled": true,
+    "show_powered_by": false,
+    "active_admins": [
+      {
+        "id": "742491",
+        "first_name": "Zhanmou",
+        "last_name": "Sun",
+        "name": "Zhanmou Sun",
+        "avatar": {
+          "initials": "Z",
+          "color": "e04e50",
+          "image_urls": {
+            "square_25": "https://static.intercomassets.com/avatars/742491/square_25/IMG_4281-1474859711.jpg?1474859711",
+            "square_50": "https://static.intercomassets.com/avatars/742491/square_50/IMG_4281-1474859711.jpg?1474859711",
+            "square_128": "https://static.intercomassets.com/avatars/742491/square_128/IMG_4281-1474859711.jpg?1474859711"
+          },
+          "image_url": "https://static.intercomassets.com/avatars/742491/square_128/IMG_4281-1474859711.jpg?1474859711"
+        }
+      },
+      {
+        "id": "904587",
+        "first_name": "小花",
+        "last_name": "",
+        "name": "小花",
+        "avatar": {
+          "initials": "小",
+          "color": "c9d7df",
+          "image_urls": {
+            "square_25": "https://static.intercomassets.com/avatars/904587/square_25/mango_default_cat_3x-1481965407.png?1481965407",
+            "square_50": "https://static.intercomassets.com/avatars/904587/square_50/mango_default_cat_3x-1481965407.png?1481965407",
+            "square_128": "https://static.intercomassets.com/avatars/904587/square_128/mango_default_cat_3x-1481965407.png?1481965407"
+          },
+          "image_url": "https://static.intercomassets.com/avatars/904587/square_128/mango_default_cat_3x-1481965407.png?1481965407"
+        }
+      },
+      {
+        "id": "1270623",
+        "first_name": "Xu",
+        "last_name": "Zhao",
+        "name": "Xu Zhao",
+        "avatar": {
+          "initials": "X",
+          "color": "3fa2f7",
+          "image_urls": {
+            "square_25": "https://static.intercomassets.com/avatars/1270623/square_25/Bitmap-1497769052.png?1497769052",
+            "square_50": "https://static.intercomassets.com/avatars/1270623/square_50/Bitmap-1497769052.png?1497769052",
+            "square_128": "https://static.intercomassets.com/avatars/1270623/square_128/Bitmap-1497769052.png?1497769052"
+          },
+          "image_url": "https://static.intercomassets.com/avatars/1270623/square_128/Bitmap-1497769052.png?1497769052"
+        }
+      }
+    ],
+    "message": "我们是轻芒团队，欢迎和我们说话，每条信息都会人工回复 (但由于近期留言数量巨大，可能回复速度会较慢)。在轻芒杂志中输入「#兴趣名字」可以创建杂志，会由我们的小花先代劳。",
+    "team_intro": "我们是轻芒团队，欢迎和我们说话，每条信息都会人工回复 (但由于近期留言数量巨大，可能回复速度会较慢)。在轻芒杂志中输入「#兴趣名字」可以创建杂志，会由我们的小花先代劳。",
+    "messenger_background": "background-8",
+    "expected_response_delay": "通常在一天之内回复",
+    "sms_notifications_enabled": true,
+    "inbound_conversations_disabled": false,
+    "office_hours_response": null,
+    "help_center_site_url": "http://qingmang.help"
+  },
+  "user": {
+    "id": "59cb6193f63c62b7a7f69cc9",
+    "type": "user",
+    "role": "user_role",
+    "locale": "zh-CN",
+    "has_conversations": true,
+    "country_code": "us"
+  },
+  "unread_conversation_ids": [],
+  "unread_dismissed_conversation_ids": [],
+  "client_messages": [],
+  "modules": {
+    "messages": {
+      "colors": {
+        "base": "#000000"
+      },
+      "features": {
+        "rtm": true,
+        "inbound_messages": true,
+        "inbound_lead_messaging": true,
+        "contact_messaging": true,
+        "outbound_messages": true,
+        "inbound_lead_messaging_docs_site": true,
+        "image_annotations": false,
+        "single_page_app_update_throttling": false
+      },
+      "instant_boot_enabled": true,
+      "activator": "#IntercomDefaultWidget",
+      "use_activator": true
+    },
+    "rtm": {
+      "endpoints": [
+        "https://nexus-websocket-b.intercom.io/pubsub/5-SykOQA4A9HrZCJiWwuTXMqKO5wGpE3ODmIxbrxyojHTIgAbeMsaCRpAyMc-frtizCdrCvAnCUKqVAUej2n7ALKWrh9sZBXekFGjG"
+      ]
+    },
+    "troubleshooting": {
+      "enabled": false
+    }
+  },
+  "anonymous_session": "U3UyeWJqS1J1a2loRmdOT0lkaVZ5akNIM2NocnZHWVRoaW9QZVJsZHE0NG5LMDFsWFdneHh5RHlpa2I5MzJUWS0tWGlLSnN4ejdsNGxIWTl5anBmYll2QT09--73919eb0aa59ef967e3856cea7c272c25a088ef7"
+}

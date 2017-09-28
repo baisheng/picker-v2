@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken')
 // const Redis = require('ioredis');
 // const redis = new Redis();
 module.exports = class extends Base {
+
   // indexAction() {
   //   return this.display();
   // }

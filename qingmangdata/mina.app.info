@@ -1,0 +1,58 @@
+{
+  "app": {
+    "alias": "",
+    "appId": "wx25d35ab97e993e90",
+    "bindedProviders": [
+      {
+        "children": [
+          {
+            "label": "\u5c0f\u7a0b\u5e8f+",
+            "type": "channel",
+            "value": "27280"
+          },
+          {
+            "label": "\u8f7b\u8292\u9605\u8bfb",
+            "type": "channel",
+            "value": "27281"
+          }
+        ],
+        "label": "\u6d4b\u8bd5\u5185\u5bb9\u6e90",
+        "type": "app",
+        "value": "org.wandoujia.qingmang_mina"
+      }
+    ],
+    "categories": [],
+    "commitTime": "1506501333496",
+    "config": {
+      "app_desc": "\u5317\u4eac\u91c7\u64b7\u79d1\u6280\u6709\u9650\u516c\u53f8",
+      "app_id": "wx25d35ab97e993e90",
+      "app_name": "\u91c7\u64b7",
+      "card_style": "auto",
+      "enable_discuss": "false",
+      "index_page_name": "\u9996\u9875",
+      "interactive_page_name": "",
+      "list_style": "list",
+      "live_page_name": "\u76f4\u64ad",
+      "live_page_style": "none",
+      "navigation_background_color": "#ffffff",
+      "navigation_text_style": "black",
+      "profile_page_name": "\u4e2a\u4eba",
+      "profile_page_style": "social",
+      "search_page_name": "\u66f4\u591a",
+      "search_page_style": "categories",
+      "token": "NWRiMWFkNGUtYTM1ZS0xMWU3LTlmMzMtMDAxNjNlMzI2OTg3"
+    },
+    "icon": "None",
+    "nickName": "",
+    "previewQrcode": "https://api.qingmang.me/mina/qrcode/preview/wx25d35ab97e993e90",
+    "principalName": "\u5317\u4eac\u91c7\u64b7\u79d1\u6280\u6709\u9650\u516c\u53f8",
+    "qrcode": "http://statics03.qingmang.mobi/mina/wxacode/default/wx25d35ab97e993e90",
+    "reviewStatus": {
+      "code": -1,
+      "reason": "\u65e0\u5f85\u5ba1\u6838\u7248\u672c"
+    },
+    "updatedTime": "1506501240752",
+    "userName": "gh_9f3c05538015"
+  },
+  "ok": true
+}

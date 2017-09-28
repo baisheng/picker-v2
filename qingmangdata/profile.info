@@ -1,0 +1,565 @@
+// Request URL:https://api.qingmang.me/v1/profile.info?token=NWRiMWFkNGUtYTM1ZS0xMWU3LTlmMzMtMDAxNjNlMzI2OTg3
+// Request Method:GET
+{
+  "profile": {
+    "uid": 2242533,
+    "type": 0,
+    "setting": {
+      "role": "none",
+      "profileStatus": "none"
+    },
+    "relation": {},
+    "stat": {
+      "readArticlesCount": 0,
+      "notesCount": 0,
+      "articleCount": 0,
+      "highlightCount": 0,
+      "favoritesCount": 0,
+      "subscriberCount": 0
+    },
+    "interests": [
+      {
+        "interestId": 7001,
+        "index": 0,
+        "isNew": false,
+        "isDefaultSubscribe": true,
+        "name": "精选",
+        "interestName": "本周精选",
+        "alias": "本周精选",
+        "tagline": "这九篇很好看",
+        "type": "official",
+        "cover": "http://statics01.qingmang.mobi/ed2824112b4895e70c744b230274441.jpeg?imageView2/0/w/1024",
+        "logo": "",
+        "listUrl": "http://api.qingmang.me/v1/magazine.issues?interest_id\u003d7001",
+        "relation": {
+          "isSubscriber": true
+        },
+        "editors": [
+          {
+            "uid": 10210,
+            "type": 1,
+            "name": "萨萨",
+            "avatar": "http://statics03.qingmang.mobi/image/proxy/aHR0cHMlM0EvL3d4LnFsb2dvLmNuL21tb3Blbi92aV8zMi9RM2F1SGd6d3pNNUxORlNEcmljM2ljTkoySXRuUmxJNmlhVjJDaHJodVJBZkpEVDVTQTVCVWJzaWNXalVFOU5VTUlXTXJnVGFFdWNBd0taM0hNMUdPWjA3Y2cvMA\u003d\u003d",
+            "desc": "這無止盡單純的溫柔。",
+            "setting": {
+              "role": "none"
+            },
+            "isGod": false,
+            "historyCountDebug": 0,
+            "bufferCountDebug": 0
+          }
+        ],
+        "mockUid": 0,
+        "ownerUid": 0
+      },
+      {
+        "interestId": 4930,
+        "index": 2,
+        "isNew": false,
+        "isDefaultSubscribe": true,
+        "name": "家居",
+        "interestName": "家居小物",
+        "alias": "家居小物",
+        "tagline": "食器/厨具/收纳",
+        "type": "official",
+        "cover": "http://statics01.qingmang.mobi/dcabb228d43621224fc1e2e39ea636c.jpeg?imageView2/0/w/1024",
+        "logo": "",
+        "listUrl": "http://api.qingmang.me/v1/magazine.issues?interest_id\u003d4930",
+        "relation": {
+          "isSubscriber": true
+        },
+        "editors": [
+          {
+            "uid": 4,
+            "type": 1,
+            "name": "彦彤",
+            "avatar": "http://statics03.qingmang.mobi/image/proxy/aHR0cHMlM0EvL3d4LnFsb2dvLmNuL21tb3Blbi92aV8zMi9EWUFJT2dxODNlcE9EcVk4UHo1RmxpY3VqYzBSemljZHAzNnU5VFZxRkE5TUp5aEo0MHgxdk5BNWlhQ2lhZGFwNmpTM1FBNFpZUnI0SzR0ZkNBVWljVjhyTU9nLzA\u003d",
+            "desc": "闻道日肥。",
+            "setting": {
+              "role": "none"
+            },
+            "isGod": false,
+            "historyCountDebug": 0,
+            "bufferCountDebug": 0
+          }
+        ],
+        "mockUid": 0,
+        "ownerUid": 0
+      },
+      {
+        "interestId": 5306,
+        "index": 3,
+        "isNew": false,
+        "isDefaultSubscribe": true,
+        "name": "穿搭",
+        "interestName": "女性时尚穿搭",
+        "alias": "女性时尚穿搭",
+        "tagline": "包包/鞋/搭配",
+        "type": "official",
+        "cover": "http://statics01.qingmang.mobi/a2104128a90b74d1e64d2b33df8d6a9.jpeg?imageView2/0/w/1024",
+        "logo": "",
+        "listUrl": "http://api.qingmang.me/v1/magazine.issues?interest_id\u003d5306",
+        "relation": {
+          "isSubscriber": true
+        },
+        "editors": [
+          {
+            "uid": 1611,
+            "type": 1,
+            "name": "Audrey_zhou",
+            "avatar": "http://account-avatar.qingmang.mobi/1611_avatar_1498451597",
+            "desc": "轻芒穿搭主编",
+            "setting": {
+              "role": "none"
+            },
+            "isGod": false,
+            "historyCountDebug": 0,
+            "bufferCountDebug": 0
+          },
+          {
+            "uid": 4,
+            "type": 1,
+            "name": "彦彤",
+            "avatar": "http://statics03.qingmang.mobi/image/proxy/aHR0cHMlM0EvL3d4LnFsb2dvLmNuL21tb3Blbi92aV8zMi9EWUFJT2dxODNlcE9EcVk4UHo1RmxpY3VqYzBSemljZHAzNnU5VFZxRkE5TUp5aEo0MHgxdk5BNWlhQ2lhZGFwNmpTM1FBNFpZUnI0SzR0ZkNBVWljVjhyTU9nLzA\u003d",
+            "desc": "闻道日肥。",
+            "setting": {
+              "role": "none"
+            },
+            "isGod": false,
+            "historyCountDebug": 0,
+            "bufferCountDebug": 0
+          }
+        ],
+        "mockUid": 0,
+        "ownerUid": 0
+      },
+      {
+        "interestId": 5380,
+        "index": 4,
+        "isNew": false,
+        "isDefaultSubscribe": true,
+        "name": "男性时尚",
+        "interestName": "男性时尚",
+        "alias": "男性时尚",
+        "tagline": "Look sharp. Live Smart.",
+        "type": "official",
+        "cover": "http://img.qingmang.mobi/image/orion/338b74c78752f1d139bff6f1d4d9ca6_564_369.jpeg",
+        "logo": "",
+        "listUrl": "http://api.qingmang.me/v1/magazine.issues?interest_id\u003d5380",
+        "relation": {
+          "isSubscriber": true
+        },
+        "editors": [
+          {
+            "uid": 1230226,
+            "type": 1,
+            "name": "neffy",
+            "avatar": "http://statics03.qingmang.mobi/image/proxy/aHR0cHMlM0EvL3d4LnFsb2dvLmNuL21tb3Blbi92aV8zMi8yVnNoQW5pYWpGVGhnWWMwQVViTHBra3NGRnA1bFEyT2lidVVpY3NRSUY5eFF0d0VBUFZTajExNUUwVkZldHBRMFA2QU9ZSUdpYWxXNXFwU29KQloyNGp6WkEvMA\u003d\u003d",
+            "desc": "None",
+            "setting": {
+              "role": "none"
+            },
+            "isGod": false,
+            "historyCountDebug": 0,
+            "bufferCountDebug": 0
+          }
+        ],
+        "mockUid": 0,
+        "ownerUid": 0
+      },
+      {
+        "interestId": 25661,
+        "index": 5,
+        "isNew": false,
+        "isDefaultSubscribe": true,
+        "name": "心灵",
+        "interestName": "心灵",
+        "alias": "心灵",
+        "tagline": "好好生活",
+        "type": "official",
+        "cover": "http://statics01.qingmang.mobi/f0e3a945ba506c8c6723c364bfc482b.jpeg?imageView2/0/w/1024",
+        "logo": "",
+        "listUrl": "http://api.qingmang.me/v1/magazine.issues?interest_id\u003d25661",
+        "relation": {
+          "isSubscriber": true
+        },
+        "editors": [
+          {
+            "uid": 10210,
+            "type": 1,
+            "name": "萨萨",
+            "avatar": "http://statics03.qingmang.mobi/image/proxy/aHR0cHMlM0EvL3d4LnFsb2dvLmNuL21tb3Blbi92aV8zMi9RM2F1SGd6d3pNNUxORlNEcmljM2ljTkoySXRuUmxJNmlhVjJDaHJodVJBZkpEVDVTQTVCVWJzaWNXalVFOU5VTUlXTXJnVGFFdWNBd0taM0hNMUdPWjA3Y2cvMA\u003d\u003d",
+            "desc": "這無止盡單純的溫柔。",
+            "setting": {
+              "role": "none"
+            },
+            "isGod": false,
+            "historyCountDebug": 0,
+            "bufferCountDebug": 0
+          }
+        ],
+        "mockUid": 0,
+        "ownerUid": 0
+      },
+      {
+        "interestId": 4928,
+        "index": 6,
+        "isNew": false,
+        "isDefaultSubscribe": true,
+        "name": "旅行",
+        "interestName": "旅行",
+        "alias": "旅行",
+        "tagline": "目的地/酒店/海岛",
+        "type": "official",
+        "cover": "http://statics01.qingmang.mobi/a904be1c148d0d6d1a1546bded96328.jpeg?imageView2/0/w/1024",
+        "logo": "",
+        "listUrl": "http://api.qingmang.me/v1/magazine.issues?interest_id\u003d4928",
+        "relation": {
+          "isSubscriber": true
+        },
+        "editors": [
+          {
+            "uid": 41236,
+            "type": 1,
+            "name": "Young",
+            "avatar": "http://account-avatar.qingmang.mobi/41236_avatar_1506150690",
+            "desc": "自由与好奇。",
+            "setting": {
+              "role": "none"
+            },
+            "isGod": false,
+            "historyCountDebug": 0,
+            "bufferCountDebug": 0
+          },
+          {
+            "uid": 186,
+            "type": 1,
+            "name": "summer",
+            "avatar": "http://account-avatar.qingmang.mobi/186_avatar_1478971624",
+            "desc": "轻芒生活里的一股泥石流。",
+            "setting": {
+              "role": "none"
+            },
+            "isGod": false,
+            "historyCountDebug": 0,
+            "bufferCountDebug": 0
+          }
+        ],
+        "mockUid": 0,
+        "ownerUid": 0
+      },
+      {
+        "interestId": 5378,
+        "index": 7,
+        "isNew": false,
+        "isDefaultSubscribe": true,
+        "name": "美妆",
+        "interestName": "美妆",
+        "alias": "美妆",
+        "tagline": "口红/眼影/妆容",
+        "type": "official",
+        "cover": "http://statics01.qingmang.mobi/85de5fca927f051e83ec47c87604953.jpeg?imageView2/0/w/1024",
+        "logo": "",
+        "listUrl": "http://api.qingmang.me/v1/magazine.issues?interest_id\u003d5378",
+        "relation": {
+          "isSubscriber": true
+        },
+        "editors": [
+          {
+            "uid": 186,
+            "type": 1,
+            "name": "summer",
+            "avatar": "http://account-avatar.qingmang.mobi/186_avatar_1478971624",
+            "desc": "轻芒生活里的一股泥石流。",
+            "setting": {
+              "role": "none"
+            },
+            "isGod": false,
+            "historyCountDebug": 0,
+            "bufferCountDebug": 0
+          }
+        ],
+        "mockUid": 0,
+        "ownerUid": 0
+      },
+      {
+        "interestId": 7358,
+        "index": 8,
+        "isNew": false,
+        "isDefaultSubscribe": true,
+        "name": "礼物",
+        "interestName": "礼物",
+        "alias": "礼物",
+        "tagline": "送出去的都是心 (新) 意",
+        "type": "official",
+        "cover": "http://statics01.qingmang.mobi/d00522b2ed88cb22d9eb9098b805ac5.jpeg?imageView2/0/w/1024",
+        "logo": "",
+        "listUrl": "http://api.qingmang.me/v1/magazine.issues?interest_id\u003d7358",
+        "relation": {
+          "isSubscriber": true
+        },
+        "editors": [
+          {
+            "uid": 41236,
+            "type": 1,
+            "name": "Young",
+            "avatar": "http://account-avatar.qingmang.mobi/41236_avatar_1506150690",
+            "desc": "自由与好奇。",
+            "setting": {
+              "role": "none"
+            },
+            "isGod": false,
+            "historyCountDebug": 0,
+            "bufferCountDebug": 0
+          }
+        ],
+        "mockUid": 0,
+        "ownerUid": 0
+      },
+      {
+        "interestId": 5358,
+        "index": 9,
+        "isNew": false,
+        "isDefaultSubscribe": true,
+        "name": "摄影",
+        "interestName": "摄影",
+        "alias": "摄影",
+        "tagline": "手机摄影/胶片/器材",
+        "type": "official",
+        "cover": "http://statics01.qingmang.mobi/4c714d88d6169d3c37e2326038d6cb2.jpeg?imageView2/0/w/1024",
+        "logo": "",
+        "listUrl": "http://api.qingmang.me/v1/magazine.issues?interest_id\u003d5358",
+        "relation": {
+          "isSubscriber": true
+        },
+        "editors": [
+          {
+            "uid": 1115651,
+            "type": 1,
+            "name": "Chloe",
+            "avatar": "http://account-avatar.qingmang.mobi/1115651_avatar_1496664560",
+            "desc": "白驹过隙，忽然而已。",
+            "setting": {
+              "role": "none"
+            },
+            "isGod": false,
+            "historyCountDebug": 0,
+            "bufferCountDebug": 0
+          }
+        ],
+        "mockUid": 0,
+        "ownerUid": 0
+      },
+      {
+        "interestId": 6260,
+        "index": 10,
+        "isNew": false,
+        "isDefaultSubscribe": true,
+        "name": "科技美学",
+        "interestName": "科技生活",
+        "alias": "科技生活",
+        "tagline": "生活中科技美学",
+        "type": "official",
+        "cover": "http://img.wdjimg.com/image/orion/1215218dea6b3d22ca4ea87881226f9d_1280_719.jpeg",
+        "logo": "",
+        "listUrl": "http://api.qingmang.me/v1/magazine.issues?interest_id\u003d6260",
+        "relation": {
+          "isSubscriber": true
+        },
+        "editors": [
+          {
+            "uid": 1308909,
+            "type": 1,
+            "name": "Qin LIN",
+            "avatar": "http://account-avatar.qingmang.mobi/1308909_avatar_1500456799",
+            "desc": "喵喵喵？",
+            "setting": {
+              "role": "none"
+            },
+            "isGod": false,
+            "historyCountDebug": 0,
+            "bufferCountDebug": 0
+          }
+        ],
+        "mockUid": 0,
+        "ownerUid": 0
+      },
+      {
+        "interestId": 4880,
+        "index": 11,
+        "isNew": false,
+        "isDefaultSubscribe": true,
+        "name": "健身",
+        "interestName": "健身",
+        "alias": "健身",
+        "tagline": "跑步/减脂/增肌",
+        "type": "official",
+        "cover": "http://statics01.qingmang.mobi/f0c29a0e426a29aad76c8dd0c3efcb6.jpeg?imageView2/0/w/1024",
+        "logo": "",
+        "listUrl": "http://api.qingmang.me/v1/magazine.issues?interest_id\u003d4880",
+        "relation": {
+          "isSubscriber": true
+        },
+        "editors": [
+          {
+            "uid": 1117084,
+            "type": 1,
+            "name": "千禾",
+            "avatar": "http://account-avatar.qingmang.mobi/1117084_avatar_1496665167",
+            "desc": "I was within and without. ",
+            "setting": {
+              "role": "none"
+            },
+            "isGod": false,
+            "historyCountDebug": 0,
+            "bufferCountDebug": 0
+          }
+        ],
+        "mockUid": 0,
+        "ownerUid": 0
+      },
+      {
+        "interestId": 7491,
+        "index": 12,
+        "isNew": false,
+        "isDefaultSubscribe": true,
+        "name": "美食",
+        "interestName": "美食",
+        "alias": "美食",
+        "tagline": "吃点好的",
+        "type": "official",
+        "cover": "http://img.qingmang.mobi/image/orion/c05b74318e7e62219a311efb0204923_1500_700.jpeg",
+        "logo": "",
+        "listUrl": "http://api.qingmang.me/v1/magazine.issues?interest_id\u003d7491",
+        "relation": {
+          "isSubscriber": true
+        },
+        "editors": [
+          {
+            "uid": 41236,
+            "type": 1,
+            "name": "Young",
+            "avatar": "http://account-avatar.qingmang.mobi/41236_avatar_1506150690",
+            "desc": "自由与好奇。",
+            "setting": {
+              "role": "none"
+            },
+            "isGod": false,
+            "historyCountDebug": 0,
+            "bufferCountDebug": 0
+          }
+        ],
+        "mockUid": 0,
+        "ownerUid": 0
+      },
+      {
+        "interestId": 6323,
+        "index": 13,
+        "isNew": false,
+        "isDefaultSubscribe": true,
+        "name": "影视",
+        "interestName": "影视",
+        "alias": "影视",
+        "tagline": "电影/电视剧/动漫",
+        "type": "official",
+        "cover": "http://statics01.qingmang.mobi/0207e0760c43b929fea7405aaeb6486.jpeg?imageView2/0/w/1024",
+        "logo": "",
+        "listUrl": "http://api.qingmang.me/v1/magazine.issues?interest_id\u003d6323",
+        "relation": {
+          "isSubscriber": true
+        },
+        "editors": [
+          {
+            "uid": 1230226,
+            "type": 1,
+            "name": "neffy",
+            "avatar": "http://statics03.qingmang.mobi/image/proxy/aHR0cHMlM0EvL3d4LnFsb2dvLmNuL21tb3Blbi92aV8zMi8yVnNoQW5pYWpGVGhnWWMwQVViTHBra3NGRnA1bFEyT2lidVVpY3NRSUY5eFF0d0VBUFZTajExNUUwVkZldHBRMFA2QU9ZSUdpYWxXNXFwU29KQloyNGp6WkEvMA\u003d\u003d",
+            "desc": "None",
+            "setting": {
+              "role": "none"
+            },
+            "isGod": false,
+            "historyCountDebug": 0,
+            "bufferCountDebug": 0
+          }
+        ],
+        "mockUid": 0,
+        "ownerUid": 0
+      },
+      {
+        "interestId": 27388,
+        "index": 14,
+        "isNew": false,
+        "isDefaultSubscribe": true,
+        "name": "阅读",
+        "interestName": "书",
+        "alias": "书",
+        "tagline": "读书，关于书",
+        "type": "official",
+        "cover": "http://statics01.qingmang.mobi/2be85d75d3c41d9c60ed2ef93b9d111.jpeg?imageView2/0/w/1024",
+        "logo": "",
+        "listUrl": "http://api.qingmang.me/v1/magazine.issues?interest_id\u003d27388",
+        "relation": {
+          "isSubscriber": true
+        },
+        "editors": [
+          {
+            "uid": 4,
+            "type": 1,
+            "name": "彦彤",
+            "avatar": "http://statics03.qingmang.mobi/image/proxy/aHR0cHMlM0EvL3d4LnFsb2dvLmNuL21tb3Blbi92aV8zMi9EWUFJT2dxODNlcE9EcVk4UHo1RmxpY3VqYzBSemljZHAzNnU5VFZxRkE5TUp5aEo0MHgxdk5BNWlhQ2lhZGFwNmpTM1FBNFpZUnI0SzR0ZkNBVWljVjhyTU9nLzA\u003d",
+            "desc": "闻道日肥。",
+            "setting": {
+              "role": "none"
+            },
+            "isGod": false,
+            "historyCountDebug": 0,
+            "bufferCountDebug": 0
+          }
+        ],
+        "mockUid": 0,
+        "ownerUid": 0
+      },
+      {
+        "interestId": 38109,
+        "index": 15,
+        "isNew": false,
+        "isDefaultSubscribe": true,
+        "name": "猫狗",
+        "interestName": "猫狗",
+        "alias": "猫狗",
+        "tagline": "及其他动物",
+        "type": "official",
+        "cover": "http://statics01.qingmang.mobi/52160f2739bd99d97f699d193119bd5.gif?imageView2/0/w/1024",
+        "logo": "",
+        "listUrl": "http://api.qingmang.me/v1/magazine.issues?interest_id\u003d38109",
+        "relation": {
+          "isSubscriber": true
+        },
+        "editors": [
+          {
+            "uid": 1230226,
+            "type": 1,
+            "name": "neffy",
+            "avatar": "http://statics03.qingmang.mobi/image/proxy/aHR0cHMlM0EvL3d4LnFsb2dvLmNuL21tb3Blbi92aV8zMi8yVnNoQW5pYWpGVGhnWWMwQVViTHBra3NGRnA1bFEyT2lidVVpY3NRSUY5eFF0d0VBUFZTajExNUUwVkZldHBRMFA2QU9ZSUdpYWxXNXFwU29KQloyNGp6WkEvMA\u003d\u003d",
+            "desc": "None",
+            "setting": {
+              "role": "none"
+            },
+            "isGod": false,
+            "historyCountDebug": 0,
+            "bufferCountDebug": 0
+          }
+        ],
+        "mockUid": 0,
+        "ownerUid": 0
+      }
+    ],
+    "updatedTimestamp": 1506501137000,
+    "isGod": false,
+    "historyCountDebug": 0,
+    "bufferCountDebug": 0
+  },
+  "ok": true,
+  "timestamp": 1506528284093
+}

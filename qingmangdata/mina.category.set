@@ -1,0 +1,26 @@
+// Request URL:http://api.qingmang.me/v1/mina.category.set
+// POST
+/*
+app_id:wx25d35ab97e993e90
+category_id:aorg.wandoujia.mp.3229032012
+category_name:采撷
+status:0
+token:NWRiMWFkNGUtYTM1ZS0xMWU3LTlmMzMtMDAxNjNlMzI2OTg3
+*/
+{
+  "category": {
+    "categoryId": "aorg.wandoujia.mp.3229032012",
+    "description": "\u613f\u541b\u591a\u91c7\u64b7",
+    "icon": "http://img.qingmang.mobi/image/orion/bd8812da02bc8b2497e8631b3b62a23_640_640.jpeg",
+    "name": "\u91c7\u64b7",
+    "status": 0,
+    "subCategories": [
+      {
+        "categoryId": "p40202",
+        "name": "\u91c7\u64b7"
+      }
+    ],
+    "type": "app"
+  },
+  "ok": true
+}

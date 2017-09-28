@@ -1,0 +1,21 @@
+// Request URL:http://api.qingmang.me/v1/mina.category.list?app_id=wx25d35ab97e993e90&token=NWRiMWFkNGUtYTM1ZS0xMWU3LTlmMzMtMDAxNjNlMzI2OTg3
+// app_id:wx25d35ab97e993e90
+// token:NWRiMWFkNGUtYTM1ZS0xMWU3LTlmMzMtMDAxNjNlMzI2OTg3
+{
+  "categories": [
+    {
+      "categoryId": "aorg.wandoujia.mp.qingmang_reads",
+      "description": "\u79d1\u6280\u3001\u4eba\u7269\u6216\u662f\u6587\u5316\uff0c\u6bcf\u5929\u63a8\u8350\u503c\u5f97\u9605\u8bfb\u7684\u597d\u6587\u7ae0",
+      "icon": "http://statics01.qingmang.mobi/95be39ec8b6c8d0e6815c31408a17d8.jpeg?imageView2/0/w/1024",
+      "name": "\u6d4b\u8bd5\u5185\u5bb9\u6e90",
+      "subCategories": [
+        {
+          "categoryId": "p4942",
+          "name": "\u8f7b\u8292\u6742\u5fd7"
+        }
+      ],
+      "type": "app"
+    }
+  ],
+  "ok": true
+}
