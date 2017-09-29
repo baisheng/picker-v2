@@ -63,16 +63,24 @@ module.exports = class extends BaseRest {
     // return this.success({user: userInfo.user_login, token: token});
   }
   async getAction () {
+    const userId = this.get('id')
     const appid = this.get('appId')
     const userMeta = this.model('usermeta')
-    const userIds = await userMeta.where({'meta_key': `picker_${appid}_capabilities`}).select()
-    let ids = []
-    userIds.forEach((item) => {
-      ids.push(item.user_id)
-    })
-    const users = await this.model('users').where({id: ['IN', ids]}).page(this.get('page'), 10).countSelect()
-    _formatMeta(users.data)
+    // id 存在获取单用户否则按分页获取多用户
+    if (!think.isEmpty(userId)) {
+      const user = await this.model('users').where({id: userId}).find()
+      _formatOneMeta(user)
+      return this.success(user)
+    } else {
+      const userIds = await userMeta.where({'meta_key': `picker_${appid}_capabilities`}).select()
+      let ids = []
+      userIds.forEach((item) => {
+        ids.push(item.user_id)
+      })
+      const users = await this.model('users').where({id: ['IN', ids]}).page(this.get('page'), 10).countSelect()
+      _formatMeta(users.data)
 
-    this.success(users)
+      this.success(users)
+    }
   }
 }

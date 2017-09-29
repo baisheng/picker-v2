@@ -106,11 +106,11 @@ module.exports = [
     //   path: [/^\/login,/^\/register]
     // },
     match: ctx => { // match 为一个函数，将 ctx 传递给这个函数，如果返回结果为 true，则启用该 middleware
-      // if (ctx.url.match(/^\/rest\/app\/(\d+)\/options?/) || ctx.url.match(/^\/rest\/org\/(\d+)\/signin?/) || ctx.url.match(/^\/api\/signin/) || ctx.url.match(/^\/api\/register/)) {
-      //   return false;
-      // } else if (ctx.url.match(/^\/rest\/org\/(\d+)\/?/) || ctx.url.match(/^\/rest\/app\/(\d+)\/?/)) {
-      //   return true;
-      // }
+      if (ctx.url.match(/^\/rest\/app\/(\d+)\/options?/) || ctx.url.match(/^\/rest\/app\/(\d+)\/signin?/) || ctx.url.match(/^\/rest\/org\/(\d+)\/signin?/) || ctx.url.match(/^\/api\/signin/) || ctx.url.match(/^\/api\/register/)) {
+        return false;
+      } else if (ctx.url.match(/^\/rest\/org\/(\d+)\/?/) || ctx.url.match(/^\/rest\/app\/(\d+)\/?/)) {
+        return true;
+      }
     }
   },
   'logic',
