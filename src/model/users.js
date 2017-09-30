@@ -98,6 +98,102 @@ module.exports = class extends Base {
     return res
   }
 
+  async save (data) {
+    if (think.isEmpty(data.id)) {
+      // Add
+      const createTime = new Date().getTime();
+      const encryptPassword = this.getEncryptPassword(data.user_pass);
+      const res = await this.where({
+        user_login: data.user_login,
+        // user_phone: data.user_phone,
+        user_email: data.user_email,
+        _logic: 'OR'
+      }).thenAdd({
+        user_login: data.user_login,
+        user_email: data.user_email,
+        user_phone: data.user_phone,
+        user_nicename: data.user_nicename,
+        user_pass: encryptPassword,
+        user_registered: createTime,
+        user_status: 1
+      });
+      if (!think.isEmpty(res)) {
+        if (res.type === 'add') {
+          const role = think.isEmpty(data.role) ? 'subscriber' : data.role
+          const usermeta = this.model('usermeta')
+          await usermeta.add({
+            user_id: res.id,
+            meta_key: data.appid ? `picker_${data.appid}_capabilities` : '_capabilities',
+            meta_value: JSON.stringify({"role": role})
+          }, {appId: this.appId})
+          // 后续这里的用户简介可以处理与 resume 模型关联
+          if (!think.isEmpty(data.summary)) {
+            await usermeta.save(res.id, {
+              'resume': JSON.stringify({"summary": data.summary})
+            })
+          }
+          if (!think.isEmpty(data.avatar)) {
+            await usermeta.save(res.id, {
+              'avatar': data.avatar
+            })
+          }
+        }
+      }
+    } else {
+      // Update
+      const info = await this.where({id: data.id}).find();
+      if (think.isEmpty(info)) {
+        return Promise.reject(new Error('UESR_NOT_EXIST'));
+      }
+      let password = data.password;
+      if (password) {
+        password = this.getEncryptPassword(password);
+      }
+      const updateData = {};
+      // ['display_name', 'type', 'status'].forEach(item => {
+      //   if (data[item]) {
+      //     updateData[item] = data[item];
+      //   }
+      // });
+      if (password) {
+        updateData.password = password;
+      }
+      // eslint-disable-next-line prefer-promise-reject-errors
+      if (think.isEmpty(updateData)) {
+        return Promise.reject('DATA_EMPTY');
+      }
+      if (!info.email && data.email) {
+        const count = await this.where({email: data.email}).count('email');
+        if (!count) {
+          updateData.email = data.email;
+        }
+      }
+      updateData.last_login_time = new Date().getTime();
+      // updateData.last_login_ip = ip;
+      const res = this.where({id: data.id}).update(updateData);
+      if (!think.isEmpty(res)) {
+        const role = think.isEmpty(data.role) ? 'subscriber' : data.role
+        const usermeta = this.model('usermeta')
+        await usermeta.add({
+          user_id: res.id,
+          meta_key: data.appid ? `picker_${data.appid}_capabilities` : '_capabilities',
+          meta_value: JSON.stringify({"role": role})
+        }, {appId: this.appId})
+        // 后续这里的用户简介可以处理与 resume 模型关联
+        if (!think.isEmpty(data.summary)) {
+          await usermeta.save(res.id, {
+            'resume': JSON.stringify({"summary": data.summary})
+          })
+        }
+        if (!think.isEmpty(data.avatar)) {
+          await usermeta.save(res.id, {
+            'avatar': data.avatar
+          })
+        }
+      }
+    }
+  }
+
   /**
    * 添加用户
    * @param {[type]} data [description]
@@ -132,10 +228,13 @@ module.exports = class extends Base {
         }, {appId: this.appId})
         // 后续这里的用户简介可以处理与 resume 模型关联
         if (!think.isEmpty(data.summary)) {
-          await usermeta.add({
-            user_id: res.id,
-            meta_key: 'resume',
-            meta_value: JSON.stringify({"summary": data.summary})
+          await usermeta.save(res.id, {
+            'resume': JSON.stringify({"summary": data.summary})
+          })
+        }
+        if (!think.isEmpty(data.avatar)) {
+          await usermeta.save(res.id, {
+            'avatar': data.avatar
           })
         }
       }

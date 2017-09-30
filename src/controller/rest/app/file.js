@@ -1,7 +1,7 @@
 /* eslint-disable no-undef,prefer-reflect */
 const path = require('path');
 const fs = require('fs')
-const sharp = require('sharp')
+// const sharp = require('sharp')
 const mediaTags = require("jsmediatags")
 const BaseRest = require('./common/rest')
 module.exports = class extends BaseRest {
@@ -19,14 +19,11 @@ module.exports = class extends BaseRest {
     }
     // 获取 文件信息
     const file = think.extend({}, this.file('file'))
-    // console.log(file)
     const filePath = file.path
     const extname = path.extname(file.name)
     const basename = path.basename(filePath) + extname;
-    // let type = file.type
-    // console.log(file.type)
 
-    // console.log(file.name + ":" + extname)
+    console.log(file.name + ":" + extname)
 
     // if (oneOf(file.type, ['audio/mpeg', 'audio/mp3'])) {
     //   return this.success(file.originalFilename)
@@ -90,13 +87,8 @@ module.exports = class extends BaseRest {
         }
         if (oneOf(file.type, ['image/jpg', 'image/jpeg', 'image/png'])) {
           try {
-            const _attachment_metadata = await sharp(file.path).metadata();
-// eslint-disable-next-line prefer-reflect
-            delete _attachment_metadata.exif;
-            Promise.all([
-              postModel.addMeta(_post_id, '_attachment_metadata', _attachment_metadata),
-              postModel.addMeta(_post_id, '_attachment_file', fileUrl)
-            ])
+            // await this.sharpMetadata(file.path)
+            await postModel.addMeta(_post_id, '_attachment_file', fileUrl)
             return this.success(retData)
           } catch (e) {
             return this.fail()
@@ -110,12 +102,13 @@ module.exports = class extends BaseRest {
 
   }
 
+
   /**
    * 文件上传
    * @returns {Promise.<*>}
    */
   async uploadAction () {
-    const _postModel = this.model('posts', {appId: this.appId})
+    const _postModel = this.model('posts', {orgId: this.orgId})
 
     const file = think.extend({}, this.file('file'));
 
@@ -150,14 +143,12 @@ module.exports = class extends BaseRest {
           status: 1,
 
         };
-
-        const _attachment_metadata = await sharp(file.path).metadata();
-        delete _attachment_metadata.exif;
-
+        // const _attachment_metadata = '';
+        // const _attachment_metadata = await this.sharpMetadata(file.path)
         const _post_id = await _postModel.add(data);
 
         if (!think.isEmpty(_post_id)) {
-          await _postModel.addPostMeta(_post_id, "_attachment_metadata", _attachment_metadata);
+          // await _postModel.addPostMeta(_post_id, "_attachment_metadata", _attachment_metadata);
           await _postModel.addPostMeta(_post_id, "_attachment_file", uppic.key);
         }
 
@@ -196,12 +187,11 @@ module.exports = class extends BaseRest {
           status: 1,
 
         }
-        const _attachment_metadata = await sharp(file.path).metadata();
-// eslint-disable-next-line prefer-reflect
-        delete _attachment_metadata.exif;
+        // const _attachment_metadata = await sharp(file.path).metadata();
+        // delete _attachment_metadata.exif;
 
         const _post_id = await _dao.add(data);
-        this.dao.addPostMeta(_post_id, "_attachment_metadata", _attachment_metadata);
+        // this.dao.addPostMeta(_post_id, "_attachment_metadata", _attachment_metadata);
         await _dao.addPostMeta(_post_id, "_attachment_file", _path);
 
 
@@ -211,5 +201,13 @@ module.exports = class extends BaseRest {
       }
     }
     return this.json(ret);
+  }
+
+  // 用 sharp 处理图片信息
+  async sharpMetadata (filepath) {
+    // const metadata = await sharp(filepath).metadata();
+    // Reflect.deleteProperty(metadata, 'exif')
+    // delete metadata.exif;
+    // return metadata
   }
 }

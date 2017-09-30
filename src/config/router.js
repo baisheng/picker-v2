@@ -14,7 +14,7 @@ module.exports = [
   // [/\/rest\/verify_code/, 'rest/public', 'rest'],
   // [/\/rest\/signin/, 'rest/signin', 'rest'],
   // [/\/rest\/orgs(?:\/(\w+))?/, 'rest/orgs', 'rest'],
-  // [/\/rest\/file(?:\/(\w+))?/, 'rest/file', 'rest'],
+  [/\/rest\/file(?:\/(\w+))?/, 'rest/file', 'rest'],
   // [/\/rest\/orgs\/subdomain_validation\/(?:\/(\w+))?/, 'rest/orgs', 'rest'],
   // ['/rest/orgs/subdomain_validation/:subdomain', 'rest/orgs:1/', 'get'],
   // [/\/rest\/podcast(?:\/(\d+))?/, 'rest/posts?id=:1&type=podcast', 'rest'],

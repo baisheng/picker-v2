@@ -14,4 +14,19 @@ module.exports = class extends Base {
   // get tablePrefix() {
   //   return 'picker_'+ this.orgId;
   // }
+
+  async save (user_id, meta) {
+    try {
+      for (const key of Object.keys(meta)) {
+        await this.thenUpdate({
+          'user_id': user_id,
+          'meta_key': key,
+          'meta_value': meta[key] + ''
+        }, {user_id: user_id, meta_key: key})
+      }
+    } catch (e) {
+      return false
+    }
+    return true
+  }
 }

@@ -3,11 +3,15 @@ const BaseRest = require('./common/rest')
 const jwt = require('jsonwebtoken')
 
 module.exports = class extends BaseRest {
+  constructor(ctx) {
+    super(ctx);
+    this.DAO = this.model('users')
+    this.metaDAO = this.model('usermeta')
+  }
+
   async postAction () {
     const data = this.post()
-    // console.log(data)
     const approach = this.post('approach')
-    const userMetaModel = this.model('usermeta')
     // 注册用户来源
     switch(approach) {
       // 微信小程序
@@ -32,14 +36,70 @@ module.exports = class extends BaseRest {
       }
       case 'pc': {
         data.appid = this.appId
-        const userId = await this.model('users').addUser(data)
+        // console.log(data)
+        const userId = await this.model('users').save(data)
         return this.success(userId)
       }
     }
   }
 
-  async verifyWxApp(encrypted_data, iv, code) {
+  async putAction () {
+    console.log('put ....')
+    const data = this.post()
+    console.log(JSON.stringify(data))
+    const approach = this.post('approach')
+    console.log(approach + '------')
+    // 注册用户来源
+    switch(approach) {
+      // 微信小程序
+      case 'wxapp': {
+        // 判断用户是否已注册
+        const wxUser = await this.DAO.getByWxApp(data.openId)
+        if (!think.isEmpty(wxUser)) {
+          // 获取 token
+          const token = await this.createToken(approach, data)
+          return this.success({userId: wxUser.id, token: token, token_type: 'Bearer'})
+        } else {
+          const userInfo = {
+            appid: this.appId,
+            user_login: data.openId,
+            user_nicename: data.nickName,
+            wxapp: data
+          }
+          const userId = await this.DAO.addWxAppUser(userInfo)
+          const token = await this.createToken(approach, data)
+          return this.success({userId: userId, token: token, token_type: 'Bearer'})
+        }
+      }
+      case 'pc': {
+        // if (!this.id) {
+        //   return this.fail('params error');
+        // }
+        const pk = this.modelInstance.pk;
+        // delete data[pk];
+        if (think.isEmpty(data)) {
+          return this.fail('data is empty');
+        }
+        // 更新
+        const currentTime = new Date().getTime();
+        data.modified = currentTime
 
+        await this.modelInstance.where({[pk]: data.id}).update(data);
+        // 更新 meta 图片数据
+        if (!Object.is(data.meta, undefined)) {
+          const res = await this.metaDAO.save(data.id, data.meta)
+          if (res) {
+            return this.success()
+          } else {
+            return this.fail('Update fail')
+          }
+          // const metaModel = await this.model('postmeta', {appId: this.appId})
+          // 保存 meta 信息
+          // await metaModel.save(this.id, data.meta)
+        }
+        // return this.success()
+      }
+    }
   }
 
   /**
@@ -70,16 +130,22 @@ module.exports = class extends BaseRest {
     if (!think.isEmpty(userId)) {
       const user = await this.model('users').where({id: userId}).find()
       _formatOneMeta(user)
+      // 处理人员头像地址
+      user.avatar = await this.model('postmeta').getAttachment('file', user.meta.avatar)
       return this.success(user)
     } else {
       const userIds = await userMeta.where({'meta_key': `picker_${appid}_capabilities`}).select()
-      let ids = []
+      const ids = []
       userIds.forEach((item) => {
         ids.push(item.user_id)
       })
       const users = await this.model('users').where({id: ['IN', ids]}).page(this.get('page'), 10).countSelect()
       _formatMeta(users.data)
-
+      for (let user of users.data) {
+        if (!think.isEmpty(user.meta.avatar)) {
+          user.avatar = await this.model('postmeta').getAttachment('file', user.meta.avatar)
+        }
+      }
       this.success(users)
     }
   }

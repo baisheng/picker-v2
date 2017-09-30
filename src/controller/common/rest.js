@@ -28,12 +28,12 @@ module.exports = class extends think.Controller {
     // console.log(JSON.parse(orgs)['vanq.picker.la'])
     // orgs = JSON.parse(orgs)
     // this.orgId = orgs[this.ctx.host]
-    this.orgId = this.get('orgId')
-    this.cachePrefix = 'picker_' + this.orgId + '_'
+    // this.orgId = this.get('orgId')
+    // this.cachePrefix = 'picker_' + this.orgId + '_'
     // console.log(this.orgId + '-----')
-    if (!think.isEmpty(this.orgId)) {
-      this.modelInstance = this.model(this.resource, {orgId: this.orgId});
-    }
+    // if (!think.isEmpty(this.orgId)) {
+    //   this.modelInstance = this.model(this.resource, {orgId: this.orgId});
+    // }
   }
   /**
    * get resource
