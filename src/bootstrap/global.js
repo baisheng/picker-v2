@@ -101,7 +101,7 @@ global._formatOneMeta = (item) => {
 
   // for (const item of list) {
     item.meta = {};
-    if (item.metas.length > 0) {
+    if (!think.isEmpty(item.metas)) {
       for (const meta of item.metas) {
         // console.log(meta.meta_key + ":" + meta.meta_value);
         item.meta[meta.meta_key] = meta.meta_value;

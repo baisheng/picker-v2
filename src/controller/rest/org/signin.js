@@ -9,9 +9,8 @@ module.exports = class extends think.Controller {
   }
 
   async postAction () {
-    console.log(this.post())
-    let orgId = this.get('orgId')
-    let data = this.post()
+    const orgId = this.get('orgId')
+    const data = this.post()
     const userLogin = data.user_login;
     const userModel = this.model('users');
     const userInfo = await userModel.where({user_login: userLogin}).find();
@@ -21,11 +20,15 @@ module.exports = class extends think.Controller {
     }
     // 验证机构中是否存在此用户并处理用户角色权限
     _formatOneMeta(userInfo)
+    if (!think.isEmpty(userInfo.meta.avatar)) {
+      userInfo.avatar = await this.model('postmeta').getAttachment('file', userInfo.meta.avatar)
+    }
     if (!Object.is(userInfo.meta[`org_${orgId}_capabilities`], undefined)) {
       userInfo.role = JSON.parse(userInfo.meta[`org_${orgId}_capabilities`]).role
     } else {
       return this.fail('ACCOUNT_FORBIDDEN');
     }
+    // if (Object.is(userInfo.meta.avatar))
 
     // 帐号是否被禁用，且投稿者不允许登录
     if ((userInfo.user_status | 0) !== 1 || userInfo.deleted === 1) {

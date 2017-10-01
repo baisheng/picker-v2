@@ -10,8 +10,13 @@ module.exports = class extends BaseRest {
   async getAction () {
     const id = this.get('id')
     const type = this.get('type')
+    const status = this.get('status')
     let query = {}
-    query.status = ['NOT IN', 'trash']
+    // if (!think.isEmpty(status)) {
+    //   query.status = ['like', `%${this.get('status')}%`]
+    // } else {
+    //   query.status = ['NOT IN', 'trash']
+    // }
     // query.type = "";
     let fields = [];
     fields.push('id');
@@ -37,12 +42,28 @@ module.exports = class extends BaseRest {
       switch (query.type) {
         case 'podcast':
           fields.push('content')
+          // 查询单条数据
           if (!think.isEmpty(id)) {
-            // query = {status: ['!=', 'delete'], id: id, parent: id, _logic: 'OR'}
-            query = {status: ['!=', 'delete'], _complex: {id: id, parent: id, _logic: 'OR'}}
+            query = {status: ['NOT IN', 'trash'], _complex: {id: id, parent: id, _logic: 'OR'}}
             return await this.getPodcast(query, fields)
           } else {
-            query = {status: ['!=', 'delete'], type: type}
+            if (status === 'my') {
+              // query.status = ['NOT IN', 'trash']
+              query.author = this.ctx.state.user.id
+            } else {
+              const queryStatus = think.isEmpty(status) ? 'publish' : status
+              query.status = ['like', `%${queryStatus}%`]
+            }
+            // console.log(JSON.stringify(query))
+            // if (!think.isEmpty(status)) {
+            //
+            //   query.status = ['like', `%${this.get('status')}%`]
+            // } else {
+            //   query.status = 'publish'
+            // query.status = ['NOT IN', 'trash']
+            // }
+            query.type = type
+            // query = {status: ['!=', 'delete'], type: type}
             return await this.getPodcastList(query, fields)
           }
         case "article":
@@ -90,6 +111,8 @@ module.exports = class extends BaseRest {
       // 如果有作者信息
       if (!Object.is(item.meta._author_id, undefined)) {
         const authorInfo = await userModel.where({id: item.meta._author_id}).find()
+        // userInfo.avatar = await this.model('postmeta').getAttachment('file', userInfo.meta.avatar)
+
         // item.author =
         item.authorInfo = authorInfo
         // 查询 出对应的作者信息
@@ -117,6 +140,7 @@ module.exports = class extends BaseRest {
     // 返回一条数据
     return this.success(list.data)
   }
+
   /**
    * 获取播客类型的内容
    *
@@ -142,12 +166,20 @@ module.exports = class extends BaseRest {
       // 如果有作者信息
       if (!Object.is(item.meta._author_id, undefined)) {
         const author = await userModel.where({id: item.meta._author_id}).find()
-        // item.author =
+        _formatOneMeta(author)
         item.authorInfo = author
         // 查询 出对应的作者信息
       } else {
-        item.authorInfo = await userModel.where({id: item.author}).find()
+        const author = await userModel.where({id: item.author}).find()
+        _formatOneMeta(author)
+        item.authorInfo = author
+
       }
+      // 取得头像地址
+      if (!Object.is(item.authorInfo.meta.avatar, undefined)) {
+        item.authorInfo.avatar = await this.model('postmeta').getAttachment('file', item.authorInfo.meta.avatar)
+      }
+
       // 音频播放的歌词信息
       // lrc
 
@@ -181,7 +213,7 @@ module.exports = class extends BaseRest {
     // 处理内容层级
     // let treeList = await arr_to_tree(list.data, 0);
     list.data = await arr_to_tree(list.data, 0);
-    
+
 
     return list
   }
@@ -205,7 +237,12 @@ module.exports = class extends BaseRest {
       data.status = 'auto-draft';
     }
     const res = await this.modelInstance.add(data)
-
+    // 更新 meta 图片数据
+    if (!Object.is(data.meta, undefined)) {
+      const metaModel = await this.model('postmeta', {appId: this.appId})
+      // 保存 meta 信息
+      await metaModel.save(res, data.meta)
+    }
     return this.success(res)
   }
 
