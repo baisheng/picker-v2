@@ -24,7 +24,6 @@ module.exports = class extends think.Model {
     const map = {}
     const list = await this.where(map).field(['id', 'domain', 'subdomain']).select()
     _formatMeta(list)
-    console.log(JSON.stringify(list))
     // console.log(JSON.stringify(list.apps))
     // for (let app of list.apps) {
     //   console.log(JSON.stringify(app))

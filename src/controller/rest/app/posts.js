@@ -47,21 +47,17 @@ module.exports = class extends BaseRest {
             query = {status: ['NOT IN', 'trash'], _complex: {id: id, parent: id, _logic: 'OR'}}
             return await this.getPodcast(query, fields)
           } else {
-            if (status === 'my') {
+            let queryType = think.isEmpty(status) ? 'publish' : status
+
+            if (queryType === 'my') {
               // query.status = ['NOT IN', 'trash']
               query.author = this.ctx.state.user.id
-            } else {
-              const queryStatus = think.isEmpty(status) ? 'publish' : status
-              query.status = ['like', `%${queryStatus}%`]
             }
-            // console.log(JSON.stringify(query))
-            // if (!think.isEmpty(status)) {
-            //
-            //   query.status = ['like', `%${this.get('status')}%`]
-            // } else {
-            //   query.status = 'publish'
-            // query.status = ['NOT IN', 'trash']
-            // }
+            if (queryType === 'drafts') {
+              query.status = ['like', '%draft%']
+            } else {
+              query.status = ['like', `%${queryType}%`]
+            }
             query.type = type
             // query = {status: ['!=', 'delete'], type: type}
             return await this.getPodcastList(query, fields)
@@ -94,8 +90,8 @@ module.exports = class extends BaseRest {
   }
 
   async getPodcastList (query, fields) {
-    const list = await this.modelInstance.where(query).field(fields.join(",")).order('sort ASC').page(this.get('page'), 100).countSelect()
-
+    const list = await this.modelInstance.where(query).field(fields.join(",")).order('sort ASC').page(this.get('page'), 10).countSelect()
+    console.log('-----')
     // 处理播放列表音频 Meta 信息
     _formatMeta(list.data)
     // 根据 Meta 信息中的音频附件 id 查询出音频地址
@@ -138,6 +134,7 @@ module.exports = class extends BaseRest {
     // 处理分类及内容层级
     await this.dealTerms(list)
     // 返回一条数据
+    // console.log(JSON.stringify(list))
     return this.success(list.data)
   }
 
@@ -257,6 +254,7 @@ module.exports = class extends BaseRest {
     const pk = this.modelInstance.pk;
     // const pk = await this.modelInstance.getPk();
     const data = this.post();
+    console.log(JSON.stringify(data))
     // Relation.deleteProperty(data, 'pk')
 // eslint-disable-next-line prefer-reflect
     delete data[pk];

@@ -11,5 +11,5 @@ think.beforeStartServer(async () => {
 })
 
 think.app.on("appReady", function () {
-  console.log('app ready')
+  // console.log('app ready')
 })
