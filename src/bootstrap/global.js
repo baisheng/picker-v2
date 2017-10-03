@@ -69,9 +69,13 @@ global.arr_to_tree = function (data, parent) {
 // eslint-disable-next-line one-var
   let result = [], temp;
   const length = data.length;
-
-  // console.log(length + "======")
-
+  if (length === 1) {
+    data[0].children = []
+    data[0].chnum = data[0].children.length
+    return data
+  }
+  // console.log(JSON.stringify(data))
+  // console.log(length + 'xxx----')
   for (let i = 0; i < length; i++) {
 
     if (data[i].parent === parent) {

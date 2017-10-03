@@ -91,7 +91,6 @@ module.exports = class extends BaseRest {
 
   async getPodcastList (query, fields) {
     const list = await this.modelInstance.where(query).field(fields.join(",")).order('sort ASC').page(this.get('page'), 10).countSelect()
-    console.log('-----')
     // 处理播放列表音频 Meta 信息
     _formatMeta(list.data)
     // 根据 Meta 信息中的音频附件 id 查询出音频地址
@@ -144,7 +143,7 @@ module.exports = class extends BaseRest {
    * @returns {Promise.<void>}
    */
   async getPodcast (query, fields) {
-    const list = await this.modelInstance.where(query).field(fields.join(",")).order('sort ASC').page(this.get('page'), 100).countSelect()
+    const list = await this.modelInstance.where(query).field(fields.join(",")).order('sort ASC').page(this.get('page'), 10).countSelect()
 
     // 处理播放列表音频 Meta 信息
     _formatMeta(list.data)
@@ -211,7 +210,6 @@ module.exports = class extends BaseRest {
     // let treeList = await arr_to_tree(list.data, 0);
     list.data = await arr_to_tree(list.data, 0);
 
-
     return list
   }
 
@@ -220,6 +218,7 @@ module.exports = class extends BaseRest {
     // let type = this.get('type')
     // console.log(this.ctx.state.user)
     const data = this.post()
+    console.log(JSON.stringify(data))
     // console.log(JSON.stringify(data))
     if (think.isEmpty(data.type)) {
       data.type = 'podcast'
