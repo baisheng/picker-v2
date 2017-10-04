@@ -43,7 +43,9 @@ module.exports = class extends think.Controller {
     // 获取签名盐
     const token = jwt.sign(userInfo, 'shared-secret', {expiresIn: '3d'})
     // user: userInfo.user_login,
-    return this.success({user: userInfo.user_login, token: token});
+    // let validity_days = 7;
+    // let expires = validity_days * 1000 * 60 * 60 * 24;
+    return this.success({user: userInfo.user_login, token: {value: token, expires: 3}});
     // }
   }
 

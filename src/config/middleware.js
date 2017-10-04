@@ -70,6 +70,10 @@ module.exports = [
     options: {}
   },
   {
+    handle: 'router',
+    options: {}
+  },
+  {
     handle: (option, app) => {
       return (ctx, next) => {
         // Custom 401 handling if you don't want to expose koa-jwt errors to users
@@ -85,11 +89,6 @@ module.exports = [
         });
       };
     }
-  },
-
-  {
-    handle: 'router',
-    options: {}
   },
   // TODO: 中间件的顺序会对请求有影响，如文件上传、 权限验证等
   {
