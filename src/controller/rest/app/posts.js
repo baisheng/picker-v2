@@ -1,4 +1,4 @@
-/* eslint-disable no-undef,no-return-await,default-case */
+/* eslint-disable no-undef,no-return-await,default-case,max-depth */
 const BaseRest = require('./common/rest')
 module.exports = class extends BaseRest {
   /**
@@ -44,22 +44,27 @@ module.exports = class extends BaseRest {
           fields.push('content')
           // 查询单条数据
           if (!think.isEmpty(id)) {
-            query = {status: ['NOT IN', 'trash'], _complex: {id: id, parent: id, _logic: 'OR'}}
+            // query = {status: ['NOT IN', 'trash'], _complex: {id: id, parent: id, _logic: 'OR'}}
+            query = {status: ['NOT IN', 'trash'], id: id}
             return await this.getPodcast(query, fields)
           } else {
-            let queryType = think.isEmpty(status) ? 'publish' : status
-
-            if (queryType === 'my') {
-              // query.status = ['NOT IN', 'trash']
-              query.author = this.ctx.state.user.id
+            const parent = this.get('parent')
+            if (!think.isEmpty(parent)) {
+              query.parent = parent
             }
-            if (queryType === 'drafts') {
-              query.status = ['like', '%draft%']
-            } else {
-              query.status = ['like', `%${queryType}%`]
+            // let queryType = think.isEmpty(status) ? 'publish' : status
+            // let queryType = think.isEmpty(status) ? '' : status
+            if (!think.isEmpty(status)) {
+              if (status === 'my') {
+                // query.status = ['NOT IN', 'trash']
+                query.author = this.ctx.state.user.id
+              }
+              if (status === 'drafts') {
+                query.status = ['like', '%draft%']
+              } else {
+                query.status = status
+              }
             }
-            query.type = type
-            // query = {status: ['!=', 'delete'], type: type}
             return await this.getPodcastList(query, fields)
           }
         case "article":
@@ -131,9 +136,8 @@ module.exports = class extends BaseRest {
       }
     }
     // 处理分类及内容层级
-    await this.dealTerms(list)
+    // await this.dealTerms(list)
     // 返回一条数据
-    // console.log(JSON.stringify(list))
     return this.success(list.data)
   }
 
@@ -218,7 +222,7 @@ module.exports = class extends BaseRest {
     // let type = this.get('type')
     // console.log(this.ctx.state.user)
     const data = this.post()
-    console.log(JSON.stringify(data))
+    // console.log(JSON.stringify(data))
     // console.log(JSON.stringify(data))
     if (think.isEmpty(data.type)) {
       data.type = 'podcast'
