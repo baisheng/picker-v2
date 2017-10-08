@@ -27,7 +27,7 @@ module.exports = class extends Base {
     // let _taxonomy = this.model("term_taxonomy");
 
     if (think.isNumber(term)) {
-      if (0 == term) {
+      if (0 === term) {
         return term;
       }
 

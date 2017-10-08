@@ -1,13 +1,96 @@
-/* eslint-disable no-undef,no-return-await,default-case,max-depth,no-warning-comments */
+/* eslint-disable no-undef,no-return-await,default-case,max-depth */
 const BaseRest = require('./common/rest')
 module.exports = class extends BaseRest {
+  async getAction () {
+    const termSlug = this.get('slug')
+    if (!think.isEmpty(termSlug)) {
+      const term = await this.model('taxonomy', {appId: this.appId}).getTermBySlug(termSlug)
+      if (!think.isEmpty(term)) {
+        const objects = await this.getObjectsInTerms(term.id)
+        return this.success(objects)
+      }
+    }
+    // 查询全部分类
+    const term = this.get('term')
+    if (!think.isEmpty(term)) {
+      const objects = await this.getObjectsInTermsByLimit(term)
+      return this.success(objects)
+    }
+  }
+
+  async getObjectsInTerms (termId) {
+    const taxonomyModel = this.model('taxonomy', {appId: this.appId})
+    const objects = await taxonomyModel.getObjectsInTermsByPage(termId)
+    if (!think.isEmpty(objects)) {
+      const postsModel = this.model('posts', {appId: this.appId})
+      const podcasts = await postsModel.where({id: ['IN', objects]}).select();
+      const metaModel = this.model('postmeta', {appId: this.appId})
+      _formatMeta(podcasts)
+
+      for (const item of podcasts) {
+        item.url = ''
+        const userModel = this.model('users');
+        // 如果有作者信息
+        if (!Object.is(item.meta._author_id, undefined)) {
+          const authorInfo = await userModel.where({id: item.meta._author_id}).find()
+          item.authorInfo = authorInfo
+          // 查询 出对应的作者信息
+        } else {
+          item.authorInfo = await userModel.where({id: item.author}).find()
+        }
+
+        // 如果有封面 默认是 thumbnail 缩略图，如果是 podcast 就是封面特色图片 featured_image
+        if (!Object.is(item.meta._thumbnail_id, undefined)) {
+          item.featured_image = await metaModel.getAttachment('file', item.meta._thumbnail_id)
+        }
+      }
+
+      return podcasts
+    }
+    return []
+  }
+
+  async getObjectsInTermsByLimit (terms) {
+    const taxonomyModel = this.model('taxonomy', {appId: this.appId})
+    const objects = await taxonomyModel.getObjectsInTermsByLimit(terms)
+    if (!think.isEmpty(objects)) {
+      const postsModel = this.model('posts', {appId: this.appId})
+      const podcasts = await postsModel.where({id: ['IN', objects]}).select();
+      const metaModel = this.model('postmeta', {appId: this.appId})
+      _formatMeta(podcasts)
+
+      for (const item of podcasts) {
+        item.url = ''
+        const userModel = this.model('users');
+        // 如果有作者信息
+        if (!Object.is(item.meta._author_id, undefined)) {
+          const authorInfo = await userModel.where({id: item.meta._author_id}).find()
+          item.authorInfo = authorInfo
+          // 查询 出对应的作者信息
+        } else {
+          item.authorInfo = await userModel.where({id: item.author}).find()
+        }
+
+        // 如果有封面 默认是 thumbnail 缩略图，如果是 podcast 就是封面特色图片 featured_image
+        if (!Object.is(item.meta._thumbnail_id, undefined)) {
+          item.featured_image = await metaModel.getAttachment('file', item.meta._thumbnail_id)
+        }
+      }
+
+      return podcasts
+    }
+    return []
+  }
+
+  // async dealObjects () {}
+
   /**
    * 获取分类信息
    * /api/category 获取全部栏目（树结构）
    * /api/category/1 获取栏目id为1的栏目信息
    * @returns {Promise.<*>}
    */
-  async getAction () {
+  async getaaaAction () {
     const id = this.get('id')
     const type = this.get('type')
     const status = this.get('status')
@@ -46,7 +129,6 @@ module.exports = class extends BaseRest {
             if (!think.isEmpty(parent)) {
               query.parent = parent
             }
-            query.status = ['NOT IN', 'trash']
             // let queryType = think.isEmpty(status) ? 'publish' : status
             // let queryType = think.isEmpty(status) ? '' : status
             if (!think.isEmpty(status)) {
@@ -188,10 +270,6 @@ module.exports = class extends BaseRest {
         item.featured_image = await metaModel.getAttachment('file', item.meta._thumbnail_id)
         // item.thumbnal = await metaModel.getThumbnail({post_id: item.id})
       }
-
-      // 获取内容的分类信息
-      // const terms = await this.model('taxonomy', {appId: this.appId}).getTermsByObject(query.id)
-      // console.log(JSON.stringify(terms))
     }
     // 处理分类及内容层级
     await this.dealTerms(list)
@@ -230,21 +308,14 @@ module.exports = class extends BaseRest {
     if (think.isEmpty(data.status)) {
       data.status = 'auto-draft';
     }
-    const postId = await this.modelInstance.add(data)
-    // 2 更新 meta 数据
+    const res = await this.modelInstance.add(data)
+    // 更新 meta 图片数据
     if (!Object.is(data.meta, undefined)) {
       const metaModel = await this.model('postmeta', {appId: this.appId})
       // 保存 meta 信息
-      await metaModel.save(postId, data.meta)
+      await metaModel.save(res, data.meta)
     }
-    // 3 添加内容与 term 分类之间的关联
-    if (think.isEmpty(data.term)) {
-      // TODO: 后台可以设置默认分类，暂时设置为1
-      data.term = 1
-    }
-    await this.model('taxonomy', {appId: this.appId}).relationships(postId, data.term)
-
-    return this.success(postId)
+    return this.success(res)
   }
 
   /**
@@ -258,6 +329,7 @@ module.exports = class extends BaseRest {
     const pk = this.modelInstance.pk;
     // const pk = await this.modelInstance.getPk();
     const data = this.post();
+    console.log(JSON.stringify(data))
     // Relation.deleteProperty(data, 'pk')
 // eslint-disable-next-line prefer-reflect
     delete data[pk];
@@ -276,12 +348,6 @@ module.exports = class extends BaseRest {
       // 保存 meta 信息
       await metaModel.save(this.id, data.meta)
     }
-    if (think.isEmpty(data.term)) {
-      // TODO: 后台可以设置默认分类，暂时设置为1
-      data.term = 1
-    }
-    await this.model('taxonomy', {appId: this.appId}).relationships(this.id, data.term)
-
     // return this.success({affectedRows: rows});
     // 返回的状态
     return this.success()

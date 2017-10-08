@@ -26,8 +26,9 @@ module.exports = class extends Base {
             return JSON.parse(attachment.meta_value)
           }
           return ''
-          break
         case 'meta':
+          break
+        default:
           break
       }
     }

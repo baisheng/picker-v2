@@ -41,7 +41,6 @@ module.exports = class extends think.Controller {
     return '';
   }
   async getAction() {
-    // console.log('lllget action')
     let data;
     if (this.id) {
       const pk = this.modelInstance.pk;
