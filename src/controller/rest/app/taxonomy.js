@@ -7,7 +7,9 @@ module.exports = class extends BaseRest {
       const term = await this.getTermBySlug(slug)
       return this.success(term)
     }
+    console.log('taxonomy ----')
     const type = this.get('type')
+    console.log(type + '------')
     // 根据分类的分类方法获取分类
     if (!think.isEmpty(type)) {
       const terms = await this.getTermsByTaxonomy(type)

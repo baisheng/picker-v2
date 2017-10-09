@@ -1,9 +1,9 @@
 module.exports = [
-  [/\/rest\/app\/(\d+)\/podcasts\/term(?:\/(\w+))?/, 'rest/app/podcasts?appId=:1&slug=:2', 'rest'],
   [/\/rest\/app\/(\d+)\/podcasts(?:\/(\d+))?/, 'rest/app/podcasts?appId=:1&id=:2', 'rest'],
   [/\/rest\/app\/(\d+)\/podcast(?:\/(\d+))?/, 'rest/app/posts?appId=:1&id=:2&type=podcast', 'rest'],
-  [/\/rest\/app\/?(\d+)\/(\w+)(?:\/(\w+))?/, 'rest/app/:2/?appId=:1&type=:3', 'rest'],
+  [/\/rest\/app\/(\d+)\/taxonomy(?:\/(\w+))?/, 'rest/app/taxonomy/?appId=:1&type=:2', 'rest'],
   [/\/rest\/app\/?(\d+)\/(\w+)(?:\/(\d+))?/, 'rest/app/:2/?appId=:1&id=:3', 'rest'],
+  [/\/rest\/app\/?(\d+)\/(\w+)(?:\/(\w+))?/, 'rest/app/:2/?appId=:1&type=:3', 'rest'],
   [/\/rest\/org\/?(\d+)\/apps(?:\/(\d+))?/, 'rest/org/apps/?orgId=:1&appId=:2', 'rest'],
   [/\/rest\/org\/(\d+)\/podcast(?:\/(\d+))?/, 'rest/org/posts?orgId=:1&id=:2&type=podcast', 'rest'],
   [/\/rest\/org\/(\d+)\/signin?/, 'rest/org/signin/?orgId=:1', 'rest'],

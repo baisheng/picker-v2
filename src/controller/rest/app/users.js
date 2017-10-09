@@ -34,9 +34,8 @@ module.exports = class extends BaseRest {
           return this.success({userId: userId, token: token, token_type: 'Bearer'})
         }
       }
-      case 'pc': {
+      default: {
         data.appid = this.appId
-        // console.log(data)
         const userId = await this.model('users').save(data)
         return this.success(userId)
       }
@@ -46,6 +45,7 @@ module.exports = class extends BaseRest {
   async putAction () {
     const data = this.post()
     const approach = this.post('approach')
+    console.log(approach)
     // console.log(approach + '------')
     // 注册用户来源
     switch(approach) {
@@ -69,11 +69,11 @@ module.exports = class extends BaseRest {
           return this.success({userId: userId, token: token, token_type: 'Bearer'})
         }
       }
-      case 'pc': {
+      default: {
         // if (!this.id) {
         //   return this.fail('params error');
         // }
-        const pk = this.modelInstance.pk;
+        // const pk = this.modelInstance.pk;
         // delete data[pk];
         if (think.isEmpty(data)) {
           return this.fail('data is empty');
@@ -82,7 +82,7 @@ module.exports = class extends BaseRest {
         const currentTime = new Date().getTime();
         data.modified = currentTime
 
-        await this.modelInstance.where({[pk]: data.id}).update(data);
+        await this.DAO.where({id: data.id}).update(data);
         // 更新 meta 图片数据
         if (!Object.is(data.meta, undefined)) {
           const res = await this.metaDAO.save(data.id, data.meta)
