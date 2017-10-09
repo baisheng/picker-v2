@@ -53,10 +53,10 @@ module.exports = class extends BaseRest {
           url: fileUrl,
           title: data.title
         }
-        if (oneOf(file.type, ['audio/mpeg', 'audio/mp3'])) {
+        if (oneOf(file.type, ['audio/mpeg', 'audio/x-m4a', 'audio/x-m4a', 'audio/mp3'])) {
           Promise.all([
-            postModel.addMeta(_post_id, '_attachment_metadata', '{}'),
-            postModel.addMeta(_post_id, '_attachment_file', fileUrl)
+            await postModel.addMeta(_post_id, '_attachment_metadata', '{}'),
+            await postModel.addMeta(_post_id, '_attachment_file', fileUrl)
           ])
           // Promise.all([
           // new mediaTags.Reader(data.guid)

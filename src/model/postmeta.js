@@ -1,4 +1,4 @@
-/* eslint-disable prefer-promise-reject-errors,no-console */
+/* eslint-disable prefer-promise-reject-errors,no-console,no-case-declarations,default-case */
 // const {PasswordHash} = require('phpass');
 const Base = require('./base');
 
@@ -17,18 +17,18 @@ module.exports = class extends Base {
   async getAttachment (type, post_id) {
     let query = {}
     query.post_id = post_id
-    if (!think.isEmpty(post_id)) {
+    if (!think.isEmpty(query.post_id)) {
       switch (type) {
-        case 'file':
+        case 'file': {
           query = think.extend({'meta_key': '_attachment_file'}, query)
+          console.log(JSON.stringify(query))
           const attachment = await this.where(query).find()
           if (!think.isEmpty(attachment)) {
             return JSON.parse(attachment.meta_value)
           }
           return ''
+        }
         case 'meta':
-          break
-        default:
           break
       }
     }
