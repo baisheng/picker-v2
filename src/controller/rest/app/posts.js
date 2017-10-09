@@ -276,10 +276,10 @@ module.exports = class extends BaseRest {
       // 保存 meta 信息
       await metaModel.save(this.id, data.meta)
     }
-    if (think.isEmpty(data.term)) {
+    // if (think.isEmpty(data.term)) {
       // TODO: 后台可以设置默认分类，暂时设置为1
-      data.term = 1
-    }
+      // data.term = 1
+    // }
     await this.model('taxonomy', {appId: this.appId}).relationships(this.id, data.term)
 
     // return this.success({affectedRows: rows});
