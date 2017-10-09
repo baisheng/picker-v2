@@ -3,10 +3,9 @@
 const jwt = require('jsonwebtoken')
 
 module.exports = class extends think.Controller {
-  async getAction () {
-    let orgId = this.get('orgId')
-    return this.success('hello! redirect org login...')
-  }
+  // async getAction () {
+  //   return this.success('hello! redirect org login...')
+  // }
 
   async postAction () {
     const orgId = this.get('orgId')
