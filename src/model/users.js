@@ -82,14 +82,14 @@ module.exports = class extends Base {
         const usermeta = this.model('usermeta')
         await usermeta.add({
           user_id: res.id,
-          meta_key: data.appid ? `picker_${data.appid}_capabilities` : '_capabilities',
+          meta_key: data.appId ? `picker_${data.appId}_capabilities` : '_capabilities',
           meta_value: JSON.stringify({"role": role})
-        }, {appId: this.appId})
+        }, {appId: data.appId})
 
         if (!think.isEmpty(data.wxapp)) {
           await usermeta.add({
             user_id: res.id,
-            meta_key: `picker_${data.appid}_wxapp`,
+            meta_key: `picker_${data.appId}_wxapp`,
             meta_value: JSON.stringify(data.wxapp)
           })
         }
@@ -123,9 +123,9 @@ module.exports = class extends Base {
           const usermeta = this.model('usermeta')
           await usermeta.add({
             user_id: res.id,
-            meta_key: data.appid ? `picker_${data.appid}_capabilities` : '_capabilities',
+            meta_key: data.appId ? `picker_${data.appId}_capabilities` : '_capabilities',
             meta_value: JSON.stringify({"role": role})
-          }, {appId: this.appId})
+          }, {appId: data.appId})
           // 后续这里的用户简介可以处理与 resume 模型关联
           if (!think.isEmpty(data.summary)) {
             await usermeta.save(res.id, {
@@ -145,18 +145,19 @@ module.exports = class extends Base {
       if (think.isEmpty(info)) {
         return Promise.reject(new Error('UESR_NOT_EXIST'));
       }
-      let password = data.password;
+      let password = data.user_pass;
       if (password) {
         password = this.getEncryptPassword(password);
       }
-      const updateData = {};
+      let updateData = {};
       // ['display_name', 'type', 'status'].forEach(item => {
       //   if (data[item]) {
       //     updateData[item] = data[item];
       //   }
       // });
+      updateData = data
       if (password) {
-        updateData.password = password;
+        updateData.user_pass = password;
       }
       // eslint-disable-next-line prefer-promise-reject-errors
       if (think.isEmpty(updateData)) {
@@ -169,16 +170,18 @@ module.exports = class extends Base {
         }
       }
       updateData.last_login_time = new Date().getTime();
+      console.log(JSON.stringify(updateData))
+
       // updateData.last_login_ip = ip;
-      const res = this.where({id: data.id}).update(updateData);
+      const res = await this.where({id: data.id}).update(updateData);
       if (!think.isEmpty(res)) {
         const role = think.isEmpty(data.role) ? 'subscriber' : data.role
         const usermeta = this.model('usermeta')
         await usermeta.add({
           user_id: res.id,
-          meta_key: data.appid ? `picker_${data.appid}_capabilities` : '_capabilities',
+          meta_key: data.appId ? `picker_${data.appId}_capabilities` : '_capabilities',
           meta_value: JSON.stringify({"role": role})
-        }, {appId: this.appId})
+        }, {appId: data.appId})
         // 后续这里的用户简介可以处理与 resume 模型关联
         if (!think.isEmpty(data.summary)) {
           await usermeta.save(res.id, {

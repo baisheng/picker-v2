@@ -45,7 +45,7 @@ module.exports = class extends BaseRest {
   async putAction () {
     const data = this.post()
     const approach = this.post('approach')
-    console.log(approach)
+    // console.log(approach)
     // console.log(approach + '------')
     // 注册用户来源
     switch(approach) {
@@ -79,22 +79,31 @@ module.exports = class extends BaseRest {
           return this.fail('data is empty');
         }
         // 更新
-        const currentTime = new Date().getTime();
-        data.modified = currentTime
+        // const currentTime = new Date().getTime();
+        // data.modified = currentTime
+        data.appId = this.appId
+        console.log(data.appId + 'xxxkkkkkk')
+        console.log(JSON.stringify(data))
+        await this.DAO.save(data)
+        return this.success()
+        // const res = await this.DAO.where({id: data.id}).update(data);
+        // if (res > 0) {
+        //   更新 meta 图片数据
+          // if (!Object.is(data.meta, undefined)) {
+          //   const res = await this.metaDAO.save(data.id, data.meta)
+          //   if (res) {
+          //     return this.success()
+          //   } else {
+          //     return this.fail('Update fail')
+          //   }
+          //   const metaModel = await this.model('postmeta', {appId: this.appId})
+          //   保存 meta 信息
+          //   await metaModel.save(this.id, data.meta)
+          // }
+        // } else {
+        //   return this.fail('Update fail')
+        // }
 
-        await this.DAO.where({id: data.id}).update(data);
-        // 更新 meta 图片数据
-        if (!Object.is(data.meta, undefined)) {
-          const res = await this.metaDAO.save(data.id, data.meta)
-          if (res) {
-            return this.success()
-          } else {
-            return this.fail('Update fail')
-          }
-          // const metaModel = await this.model('postmeta', {appId: this.appId})
-          // 保存 meta 信息
-          // await metaModel.save(this.id, data.meta)
-        }
         // return this.success()
       }
     }
@@ -139,7 +148,7 @@ module.exports = class extends BaseRest {
       })
       const users = await this.model('users').where({id: ['IN', ids]}).page(this.get('page'), 10).countSelect()
       _formatMeta(users.data)
-      for (let user of users.data) {
+      for (const user of users.data) {
         if (!think.isEmpty(user.meta.avatar)) {
           user.avatar = await this.model('postmeta').getAttachment('file', user.meta.avatar)
         }
