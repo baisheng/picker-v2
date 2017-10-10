@@ -7,9 +7,7 @@ module.exports = class extends BaseRest {
       const term = await this.getTermBySlug(slug)
       return this.success(term)
     }
-    console.log('taxonomy ----')
     const type = this.get('type')
-    console.log(type + '------')
     // 根据分类的分类方法获取分类
     if (!think.isEmpty(type)) {
       const terms = await this.getTermsByTaxonomy(type)
@@ -41,6 +39,15 @@ module.exports = class extends BaseRest {
   async getTermsByTaxonomy (taxonomy) {
     const taxonomyModel = this.model('taxonomy', {appId: this.appId})
     const terms = await taxonomyModel.getTerms(taxonomy)
+    for (const item of terms) {
+      item.url = ''
+      const metaModel = this.model('postmeta', {appId: this.appId})
+      // 如果有封面 默认是 thumbnail 缩略图，分类封面特色图片 featured_image
+      if (!Object.is(item.meta._thumbnail_id, undefined)) {
+        item.featured_image = await metaModel.getAttachment('file', item.meta._thumbnail_id)
+      }
+    }
+
     return terms
   }
 
@@ -49,6 +56,4 @@ module.exports = class extends BaseRest {
     const objects = await taxonomyModel.getObjectsInTermsByLimit(2)
     return objects
   }
-
-
 }

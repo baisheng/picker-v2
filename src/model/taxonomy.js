@@ -1,4 +1,4 @@
-/* eslint-disable no-return-await */
+/* eslint-disable no-return-await,no-undef */
 const Base = require('./base');
 
 module.exports = class extends Base {
@@ -23,13 +23,16 @@ module.exports = class extends Base {
     const allTerms = await this.allTerms()
     const allTaxonomies = await this.allTaxonomies()
 
-    let categorys = await think._.filter(allTaxonomies, {'taxonomy': taxonomy})
+    // 按分类方法查询分类信息
+    const categorys = await think._.filter(allTaxonomies, {'taxonomy': taxonomy})
+
     let _terms = []
     categorys.forEach((item) => {
-      _terms.push(think._.filter(allTerms, {id: item.term_id}))
+      _terms.push(
+        Object.assign({},
+          item, think._.find(allTerms, {id: item.term_id})))
     })
-
-    return think._.flatMapDeep(_terms)
+    return _terms
   }
 
   async getObjectsInTermsByLimit (term_ids, taxonomies = 'category', limit = 6) {
@@ -127,6 +130,7 @@ module.exports = class extends Base {
 
     if (think.isEmpty(ret)) {
       let _data = await this.model('terms', {appId: this.appId}).select();
+      _formatMeta(_data)
       await think.cache(cacheKey, _data)
       ret = await think.cache(cacheKey)
     }
